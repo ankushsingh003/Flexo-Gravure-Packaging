@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - FlexoLearn</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>📚 FlexoLearn</h1>
+                <p class="tagline">Master Flexography Packaging</p>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Payment Container -->
+    <section class="auth-container">
+        <div class="payment-card">
+            <div class="auth-header">
+                <h2>Complete Your Purchase</h2>
+                <p id="userEmail"></p>
+            </div>
+
+            <div class="payment-summary">
+                <h3>Order Summary</h3>
+                <div class="summary-item">
+                    <span>Full Course Access (Lifetime)</span>
+                    <span class="price">₹2,999</span>
+                </div>
+                <div class="summary-item">
+                    <span>Expert Support (6 Months)</span>
+                    <span class="price">₹499</span>
+                </div>
+                <div class="summary-total">
+                    <span>Total Amount</span>
+                    <span class="total-price">₹3,498</span>
+                </div>
+            </div>
+
+            <div class="payment-methods">
+                <h3>Select Payment Method</h3>
+                
+                <div class="payment-option">
+                    <input type="radio" id="netbanking" name="payment" value="netbanking" checked>
+                    <label for="netbanking" class="payment-label">
+                        <div class="method-icon">🏦</div>
+                        <div class="method-info">
+                            <span class="method-title">Net Banking</span>
+                            <span class="method-desc">Direct bank transfer - Fastest & Secure</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="payment-option">
+                    <input type="radio" id="upi" name="payment" value="upi">
+                    <label for="upi" class="payment-label">
+                        <div class="method-icon">📱</div>
+                        <div class="method-info">
+                            <span class="method-title">UPI Payment</span>
+                            <span class="method-desc">Google Pay, PhonePe, Paytm - Instant</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="payment-option">
+                    <input type="radio" id="qrcode" name="payment" value="qrcode">
+                    <label for="qrcode" class="payment-label">
+                        <div class="method-icon">📲</div>
+                        <div class="method-info">
+                            <span class="method-title">QR Code Scan</span>
+                            <span class="method-desc">Scan with any UPI app - Quick & Easy</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Net Banking Details -->
+            <div id="netbankingDetails" class="payment-details active">
+                <h4>Select Your Bank</h4>
+                <select class="bank-select" required>
+                    <option value="">Choose a bank...</option>
+                    <option value="sbi">State Bank of India (SBI)</option>
+                    <option value="hdfc">HDFC Bank</option>
+                    <option value="icici">ICICI Bank</option>
+                    <option value="axis">Axis Bank</option>
+                    <option value="punjab">Punjab National Bank</option>
+                    <option value="boi">Bank of India</option>
+                </select>
+            </div>
+
+            <!-- UPI Details -->
+            <div id="upiDetails" class="payment-details">
+                <h4>UPI ID</h4>
+                <input type="text" placeholder="yourname@upi" class="upi-input" required>
+                <p class="payment-note">You'll be redirected to your UPI app to complete the payment</p>
+            </div>
+
+            <!-- QR Code Details -->
+            <div id="qrcodeDetails" class="payment-details">
+                <h4>Scan the QR Code</h4>
+                <div class="qr-container">
+                    <div class="qr-code">📦</div>
+                    <p>Amount: ₹3,498</p>
+                </div>
+                <p class="payment-note">Scan this QR code with any UPI app to complete payment</p>
+            </div>
+
+            <button class="btn-payment" onclick="processPayment()">Complete Payment</button>
+
+            <div class="payment-security">
+                <p>🔒 Your payment is secured with SSL encryption</p>
+                <p>All transactions are protected by 256-bit encryption</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>FlexoLearn</h4>
+                <p>Your trusted partner in flexography education</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 FlexoLearn. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('flexoUser'));
+            if (!user) {
+                window.location.href = 'login.html';
+            } else {
+                document.getElementById('userEmail').textContent = 'Email: ' + user.email;
+            }
+
+            // Handle payment method selection
+            document.querySelectorAll('input[name="payment"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    showPaymentDetails(this.value);
+                });
+            });
+        });
+
+        function showPaymentDetails(method) {
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.classList.remove('active');
+            });
+
+            if (method === 'netbanking') {
+                document.getElementById('netbankingDetails').classList.add('active');
+            } else if (method === 'upi') {
+                document.getElementById('upiDetails').classList.add('active');
+            } else if (method === 'qrcode') {
+                document.getElementById('qrcodeDetails').classList.add('active');
+            }
+        }
+
+        function processPayment() {
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            const user = JSON.parse(localStorage.getItem('flexoUser'));
+
+            // Validate selection
+            if (paymentMethod === 'netbanking') {
+                const bank = document.querySelector('.bank-select').value;
+                if (!bank) {
+                    alert('Please select a bank');
+                    return;
+                }
+            } else if (paymentMethod === 'upi') {
+                const upiId = document.querySelector('.upi-input').value;
+                if (!upiId) {
+                    alert('Please enter your UPI ID');
+                    return;
+                }
+            }
+
+            // Process payment (simulate)
+            user.paymentMethod = paymentMethod;
+            user.paymentDate = new Date().toLocaleString();
+            user.paymentStatus = 'completed';
+            localStorage.setItem('flexoUser', JSON.stringify(user));
+
+            // Show success and redirect
+            alert('Payment successful! Welcome to FlexoLearn.');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

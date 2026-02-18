@@ -17,6 +17,14 @@
                 <h1>🚀 Flexoverse</h1>
                 <p class="tagline">Master Flexography Packaging</p>
             </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="basic-courses.html" class="nav-link">Basic Courses</a></li>
+                <li><a href="advanced-courses.html" class="nav-link">Advanced Courses</a></li>
+                <li><a href="#" class="nav-link" onclick="openNotesModal(event)">Notes</a></li>
+                <li><a href="#" class="nav-link" onclick="openResearchPapers(event)">Research Papers</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -29,14 +37,30 @@
             </div>
 
             <div id="videoGrid" class="enrolled-grid">
-                <!-- Videos will be injected here -->
-            </div>
 
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn-payment" onclick="window.location.href='index.html'">Back to Home</button>
+                </div>
+            </div>
+    </section>
+
+    <!-- Notes Modal -->
+    <div id="notesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeNotesModal()">&times;</span>
+            <div class="auth-header" style="text-align: center;">
+                <h2>📚 Course Notes</h2>
+                <p id="notesSubtitle">Downloadable PDF resources for your learning</p>
+            </div>
+            <div id="notesList" class="enrolled-grid"
+                style="grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem;">
+                <!-- PDF links will be injected here -->
+            </div>
             <div style="text-align: center; margin-top: 2rem;">
-                <button class="btn-payment" onclick="window.location.href='index.html'">Back to Home</button>
+                <button class="btn-payment" onclick="closeNotesModal()">Close</button>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -134,6 +158,88 @@
                 `;
                 videoGrid.appendChild(card);
             });
+        }
+
+        // Notes Modal Functions
+        function openNotesModal(e) {
+            if (e) e.preventDefault();
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseTitle = urlParams.get('course') || 'General';
+
+            const notesList = document.getElementById('notesList');
+            const notesSubtitle = document.getElementById('notesSubtitle');
+            notesSubtitle.textContent = `PDF resources for: ${courseTitle}`;
+
+            // Define notes mapping (placeholders for now)
+            const notesData = {
+                'Flexography': [
+                    { name: 'Flexography Fundamentals.pdf', file: 'notes/flexo_basics.pdf' },
+                    { name: 'Plate Making Guide.pdf', file: 'notes/plate_making.pdf' },
+                    { name: 'Ink Management Pro.pdf', file: 'notes/ink_management.pdf' }
+                ],
+                'Gravure': [
+                    { name: 'Rotogravure Essentials.pdf', file: 'notes/gravure_essentials.pdf' },
+                    { name: 'Cylinder Engraving 101.pdf', file: 'notes/cylinder_engraving.pdf' }
+                ],
+                'default': [
+                    { name: 'General Packaging Overview.pdf', file: 'notes/general_packaging.pdf' },
+                    { name: 'Industry Standards.pdf', file: 'notes/standards.pdf' }
+                ]
+            };
+
+            let selectedNotes = notesData['default'];
+            for (let key in notesData) {
+                if (courseTitle.toLowerCase().includes(key.toLowerCase())) {
+                    selectedNotes = notesData[key];
+                    break;
+                }
+            }
+
+            notesList.innerHTML = '';
+            selectedNotes.forEach(note => {
+                const noteItem = document.createElement('div');
+                noteItem.className = 'enrolled-card';
+                noteItem.style.display = 'flex';
+                noteItem.style.justifyContent = 'space-between';
+                noteItem.style.alignItems = 'center';
+                noteItem.style.padding = '1rem 1.5rem';
+
+                noteItem.innerHTML = `
+                    <div style="display: flex; alignItems: center; gap: 1rem;">
+                        <span style="font-size: 1.5rem;">📄</span>
+                        <span style="font-weight: 500;">${note.name}</span>
+                    </div>
+                    <a href="${note.file}" download class="btn-explore" style="padding: 0.5rem 1rem; margin: 0; font-size: 0.9rem;">Download</a>
+                `;
+                notesList.appendChild(noteItem);
+            });
+
+            document.getElementById('notesModal').classList.add('show');
+        }
+
+        function openResearchPapers(e) {
+            if (e) e.preventDefault();
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseTitle = urlParams.get('course') || 'Flexography Gravure Packaging';
+
+            // Construct Google Scholar query
+            const query = encodeURIComponent(`${courseTitle} research papers`);
+            const scholarUrl = `https://scholar.google.com/scholar?q=${query}`;
+
+            // Open in new tab
+            window.open(scholarUrl, '_blank');
+        }
+
+        function closeNotesModal() {
+            document.getElementById('notesModal').classList.remove('show');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('notesModal');
+            if (event.target == modal) {
+                closeNotesModal();
+            }
         }
     </script>
 </body>

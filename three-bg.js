@@ -50,12 +50,14 @@ class FlexoBackground {
         const geometries = [
             new THREE.BoxGeometry(1, 1.5, 0.4),
             new THREE.CylinderGeometry(0.4, 0.4, 1.2, 32),
-            new THREE.BoxGeometry(0.8, 1.2, 0.3)
+            new THREE.BoxGeometry(0.8, 1.2, 0.3),
+            new THREE.SphereGeometry(0.4, 24, 24),
+            new THREE.TorusGeometry(0.5, 0.2, 16, 100)
         ];
 
         const colors = [0x2563eb, 0xf59e0b, 0x10b981, 0xef4444, 0x8b5cf6];
 
-        for (let i = 0; i < 18; i++) {
+        for (let i = 0; i < 45; i++) {
             const geometry = geometries[Math.floor(Math.random() * geometries.length)];
             const color = colors[Math.floor(Math.random() * colors.length)];
             const material = new THREE.MeshPhongMaterial({
@@ -68,9 +70,9 @@ class FlexoBackground {
             const mesh = new THREE.Mesh(geometry, material);
 
             mesh.position.set(
-                (Math.random() - 0.5) * 25,
-                (Math.random() - 0.5) * 25,
-                (Math.random() - 0.5) * 15 - 5
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 40,
+                (Math.random() - 0.5) * 20 - 10
             );
 
             mesh.rotation.set(
@@ -155,26 +157,49 @@ class FlexoBackground {
         this.camera.position.y = -this.mouse.y * 2.5;
         this.camera.lookAt(0, 0, 10);
 
-        // Animate products with mouse influence
-        this.products.forEach(mesh => {
+        // Animate products with mouse influence and anti-clustering
+        this.products.forEach((mesh, index) => {
             mesh.rotation.x += mesh.userData.rotationSpeed.x;
             mesh.rotation.y += mesh.userData.rotationSpeed.y;
             mesh.rotation.z += mesh.userData.rotationSpeed.z;
 
-            // Mouse attraction force
-            const dx = (this.mouse.x * 15) - mesh.position.x;
-            const dy = (-this.mouse.y * 15) - mesh.position.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+            // 1. Restoration Force (Return to original position)
+            const homeDx = mesh.userData.originalPos.x - mesh.position.x;
+            const homeDy = mesh.userData.originalPos.y - mesh.position.y;
+            mesh.userData.velocity.x += homeDx * 0.0001;
+            mesh.userData.velocity.y += homeDy * 0.0001;
 
-            if (dist < 20) {
-                const force = (20 - dist) * 0.0001;
-                mesh.userData.velocity.x += dx * force;
-                mesh.userData.velocity.y += dy * force;
+            // 2. Mouse Influence (Disturbance)
+            const mouseDx = (this.mouse.x * 15) - mesh.position.x;
+            const mouseDy = (-this.mouse.y * 15) - mesh.position.y;
+            const distToMouse = Math.sqrt(mouseDx * mouseDx + mouseDy * mouseDy);
+
+            if (distToMouse < 8) {
+                // Subtle attraction/churning
+                const force = (8 - distToMouse) * 0.0005;
+                mesh.userData.velocity.x += mouseDx * force;
+                mesh.userData.velocity.y += mouseDy * force;
+            }
+
+            // 3. Separation/Repulsion (Avoid clustering)
+            for (let i = index + 1; i < this.products.length; i++) {
+                const other = this.products[i];
+                const dx = other.position.x - mesh.position.x;
+                const dy = other.position.y - mesh.position.y;
+                const dSquared = dx * dx + dy * dy;
+                if (dSquared < 9) { // 3 units away
+                    const dist = Math.sqrt(dSquared) || 1;
+                    const repulsion = (3 - dist) * 0.0002;
+                    mesh.userData.velocity.x -= (dx / dist) * repulsion;
+                    mesh.userData.velocity.y -= (dy / dist) * repulsion;
+                    other.userData.velocity.x += (dx / dist) * repulsion;
+                    other.userData.velocity.y += (dy / dist) * repulsion;
+                }
             }
 
             // Apply friction/drag
-            mesh.userData.velocity.x *= 0.98;
-            mesh.userData.velocity.y *= 0.98;
+            mesh.userData.velocity.x *= 0.97;
+            mesh.userData.velocity.y *= 0.97;
 
             mesh.position.x += mesh.userData.velocity.x;
             mesh.position.y += mesh.userData.velocity.y;
@@ -184,13 +209,9 @@ class FlexoBackground {
             const pulse = 1 + Math.sin(mesh.userData.pulsePhase) * 0.05;
             mesh.scale.set(pulse, pulse, pulse);
 
-            // Boundary wrapping
-            const boundX = 20;
-            const boundY = 15;
-            if (mesh.position.x > boundX) mesh.position.x = -boundX;
-            if (mesh.position.x < -boundX) mesh.position.x = boundX;
-            if (mesh.position.y > boundY) mesh.position.y = -boundY;
-            if (mesh.position.y < -boundY) mesh.position.y = boundY;
+            // Boundary soft limits
+            if (Math.abs(mesh.position.x) > 25) mesh.userData.velocity.x *= -0.5;
+            if (Math.abs(mesh.position.y) > 20) mesh.userData.velocity.y *= -0.5;
         });
 
         // Drift particles

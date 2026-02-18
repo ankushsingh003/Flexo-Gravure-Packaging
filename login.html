@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - FlexoLearn</title>
+    <title>Login - Flexoverse</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="auth-page">
+    <div id="canvas-container"></div>
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <h1>📚 FlexoLearn</h1>
+                <h1>🚀 Flexoverse</h1>
                 <p class="tagline">Master Flexography Packaging</p>
             </div>
         </div>
@@ -22,28 +25,18 @@
         <div class="auth-card">
             <div class="auth-header">
                 <h2>Welcome Back</h2>
-                <p>Login to your FlexoLearn account</p>
+                <p>Login to your Flexoverse account</p>
             </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)" class="auth-form">
                 <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        placeholder="Enter your email" 
-                        required
-                    >
+                    <input type="email" id="email" placeholder="Enter your email" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        placeholder="Enter your password" 
-                        required
-                    >
+                    <input type="password" id="password" placeholder="Enter your password" required>
                 </div>
 
                 <div class="form-group checkbox">
@@ -51,7 +44,7 @@
                     <label for="remember">Remember me</label>
                 </div>
 
-                <button type="submit" class="btn-login">Login to FlexoLearn</button>
+                <button type="submit" class="btn-login">Login to Flexoverse</button>
             </form>
 
             <div class="auth-divider">OR</div>
@@ -71,7 +64,7 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>FlexoLearn</h4>
+                <h4>Flexoverse</h4>
                 <p>Your trusted partner in flexography education</p>
             </div>
             <div class="footer-section">
@@ -92,17 +85,20 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 FlexoLearn. All rights reserved.</p>
+            <p>&copy; 2026 Flexoverse. All rights reserved.</p>
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="three-bg.js"></script>
+    <script src="click-spark.js"></script>
     <script src="script.js"></script>
     <script>
         function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            
+
             if (email && password) {
                 // Save user data to localStorage
                 const userData = {
@@ -112,7 +108,7 @@
                     enrolled: []
                 };
                 localStorage.setItem('flexoUser', JSON.stringify(userData));
-                
+
                 // Check if login was from course enrollment
                 const fromCourse = sessionStorage.getItem('loginFromCourse');
                 if (fromCourse) {
@@ -127,14 +123,14 @@
         function handleGuestLogin() {
             // Create guest user
             const userData = {
-                email: 'guest@flexolearn.com',
+                email: 'guest@flexoverse.com',
                 name: 'Guest User',
                 loginTime: new Date().toLocaleString(),
                 enrolled: [],
                 isGuest: true
             };
             localStorage.setItem('flexoUser', JSON.stringify(userData));
-            
+
             // Check if login was from course enrollment
             const fromCourse = sessionStorage.getItem('loginFromCourse');
             if (fromCourse) {
@@ -151,4 +147,5 @@
         }
     </script>
 </body>
+
 </html>

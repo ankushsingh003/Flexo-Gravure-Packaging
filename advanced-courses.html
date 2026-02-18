@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Courses - FlexoLearn</title>
+    <title>Advanced Courses - Flexoverse</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+    <div id="canvas-container"></div>
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <h1>📚 FlexoLearn</h1>
+                <h1>🚀 Flexoverse</h1>
                 <p class="tagline">Master Flexography Packaging</p>
             </div>
             <ul class="nav-menu">
@@ -160,7 +163,8 @@
         <div class="testimonials-grid">
             <div class="testimonial-card">
                 <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p>"These advanced courses transformed my approach to machine efficiency. I've already implemented several strategies!"</p>
+                <p>"These advanced courses transformed my approach to machine efficiency. I've already implemented
+                    several strategies!"</p>
                 <div class="testimonial-author">- Rajesh Kumar (Production Manager)</div>
             </div>
             <div class="testimonial-card">
@@ -190,7 +194,7 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>FlexoLearn</h4>
+                <h4>Flexoverse</h4>
                 <p>Your trusted partner in flexography education</p>
             </div>
             <div class="footer-section">
@@ -212,21 +216,24 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 FlexoLearn. All rights reserved.</p>
+            <p>&copy; 2026 Flexoverse. All rights reserved.</p>
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="three-bg.js"></script>
+    <script src="click-spark.js"></script>
     <script src="script.js"></script>
     <script>
         // Load advanced courses on page load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadAdvancedCoursesPage();
         });
 
         function loadAdvancedCoursesPage() {
             const grid = document.getElementById('advancedCoursesGrid');
             const advancedCourses = courses.advanced;
-            
+
             advancedCourses.forEach(course => {
                 grid.appendChild(createCourseCard(course));
             });
@@ -237,4 +244,5 @@
         }
     </script>
 </body>
+
 </html>

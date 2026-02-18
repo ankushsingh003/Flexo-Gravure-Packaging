@@ -1,8 +1,8 @@
-# FlexoLearn - Interactive E-Learning Platform
+# Flexoverse - Interactive 3D E-Learning Platform
 
 ## 📚 Project Overview
 
-FlexoLearn is a comprehensive interactive e-learning platform for flexography packaging courses. It features a home page with a learning path selector, separate pages for basic and advanced courses, and full course management functionality.
+Flexoverse is a comprehensive interactive e-learning platform for flexography packaging courses. It features a home page with a learning path selector, separate pages for basic and advanced courses, and full course management functionality.
 
 ## 📁 File Structure
 
@@ -238,10 +238,10 @@ Topics: Optimization, efficiency, quality control
 
 ## 📄 License
 
-Educational Platform © 2026 FlexoLearn. All rights reserved.
+Educational Platform © 2026 Flexoverse. All rights reserved.
 
 ---
 
 **Version**: 1.0
 **Last Updated**: January 21, 2026
-**Created by**: FlexoLearn Team
+**Created by**: Flexoverse Team

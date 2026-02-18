@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Videos - Flexoverse</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="auth-page">
+    <div id="canvas-container"></div>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>🚀 Flexoverse</h1>
+                <p class="tagline">Master Flexography Packaging</p>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Videos Container -->
+    <section class="auth-container" style="max-width: 1000px;">
+        <div class="payment-card video-card">
+            <div class="auth-header">
+                <h2 id="courseTitleDisplay">Course Videos</h2>
+                <p>Welcome! Here are some recommended videos for your course.</p>
+            </div>
+
+            <div id="videoGrid" class="enrolled-grid">
+                <!-- Videos will be injected here -->
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn-payment" onclick="window.location.href='index.html'">Back to Home</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Flexoverse</h4>
+                <p>Your trusted partner in flexography education</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Flexoverse. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="three-bg.js"></script>
+    <script src="click-spark.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseTitle = urlParams.get('course');
+
+            if (courseTitle) {
+                document.getElementById('courseTitleDisplay').textContent = courseTitle + " - Tutorial Videos";
+                loadVideos(courseTitle);
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        function loadVideos(course) {
+            const videoGrid = document.getElementById('videoGrid');
+
+            // Define video data based on course keywords
+            const videoData = {
+                'Flexography': [
+                    { title: 'Flexography Printing | Part 1', id: 'jf3JrLBCrDc' },
+                    { title: 'Flexography Printing | Part 2', id: 'XHlMp2ram54' },
+                    { title: 'Flexography Printing | Part 3', id: 'JOzDcQka3IM' },
+                    { title: 'Flexographic Printing Process', id: '3MHOssPWpfE' },
+                    { title: 'Flexography for Beginners', id: 'hTF_fgpWoTo' },
+                    { title: 'Flexo Plate Making', id: 'MnJL4cla6jc' }
+                ],
+                'Gravure': [
+                    { title: 'Rotogravure Printing Process', id: 'k6QiKZ5dCsM' },
+                    { title: 'Flexography Printing | Part 1', id: 'jf3JrLBCrDc' },
+                    { title: 'Flexography Printing | Part 2', id: 'XHlMp2ram54' },
+                    { title: 'Flexography Printing | Part 3', id: 'JOzDcQka3IM' }
+                ],
+                'Inks': [
+                    { title: 'Flexographic Inks Basics', id: 'InkVideo1' },
+                    { title: 'Color Management in Flexo', id: 'ColorVideo' }
+                ],
+                'Defects': [
+                    { title: 'Common Printing Defects', id: 'Defects1' },
+                    { title: 'Troubleshooting Printing Issues', id: 'Trouble1' }
+                ],
+                'default': [
+                    { title: 'Introduction to Packaging', id: 'PkgIntro' },
+                    { title: 'Printing Technologies Overview', id: 'TechOverview' }
+                ]
+            };
+
+            let selectedVideos = videoData['default'];
+            for (let key in videoData) {
+                if (course.toLowerCase().includes(key.toLowerCase())) {
+                    selectedVideos = videoData[key];
+                    break;
+                }
+            }
+
+            videoGrid.innerHTML = '';
+            selectedVideos.forEach(video => {
+                const card = document.createElement('div');
+                card.className = 'enrolled-card';
+                card.style.padding = '1rem';
+
+                // Using standard YouTube embed URL. 
+                // Note: Some IDs are placeholders if real ones aren't found, 
+                // but I'll use real IDs where possible or generic ones.
+                const videoId = video.id;
+
+                card.innerHTML = `
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+                        <iframe 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                            src="https://www.youtube.com/embed/${videoId}" 
+                            title="${video.title}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <h4 style="margin-top: 1rem; color: var(--primary-color);">${video.title}</h4>
+                `;
+                videoGrid.appendChild(card);
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 // ============================================
-// FLEXOLEARN - E-Learning Platform JavaScript
+// FLEXOVERSE - E-Learning Platform JavaScript
 // ============================================
 
 // Course Data
@@ -264,7 +264,7 @@ const courses = {
 };
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Only load courses on home page
     if (document.getElementById('basicCoursesGrid') && document.getElementById('advancedCoursesGrid')) {
         loadCourses();
@@ -369,15 +369,19 @@ function closeExploreModal() {
     modal.classList.remove('show');
 }
 
-// Redirect to another page
+// Redirect to another page with spark effect
 function redirectTo(page) {
-    window.location.href = page;
+    if (window.sparkRedirect) {
+        window.sparkRedirect(page);
+    } else {
+        window.location.href = page;
+    }
 }
 
 // Open course modal
 function openModal(courseOrId) {
     let course;
-    
+
     if (typeof courseOrId === 'number') {
         // Find course by ID
         course = [...courses.basic, ...courses.advanced].find(c => c.id === courseOrId);
@@ -427,10 +431,10 @@ function closeModal() {
 }
 
 // Close modals when clicking outside
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     const courseModal = document.getElementById('courseModal');
     const exploreModal = document.getElementById('exploreModal');
-    
+
     if (event.target === courseModal) {
         closeModal();
     }
@@ -451,7 +455,10 @@ function enrollCourse() {
 
     if (window.currentCourse) {
         closeModal();
-        
+
+        // Save selected course for payment and videos page
+        localStorage.setItem('selectedCourse', JSON.stringify(window.currentCourse));
+
         // Show enrollment confirmation
         const enrollmentModal = document.getElementById('enrollmentModal');
         document.getElementById('enrolledCourseTitle').textContent = window.currentCourse.title;
@@ -459,7 +466,7 @@ function enrollCourse() {
 
         // Simulate enrollment process
         console.log('Enrolled in:', window.currentCourse.title);
-        
+
         // Show success notification
         showNotification('Successfully enrolled in ' + window.currentCourse.title);
     }
@@ -474,7 +481,7 @@ function closeEnrollmentModal() {
 // Handle contact form
 function handleContactForm(event) {
     event.preventDefault();
-    
+
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
@@ -487,7 +494,7 @@ function handleContactForm(event) {
 
     // Simulate form submission
     console.log('Contact form submitted:', { name, email, message });
-    
+
     showNotification('Message sent successfully! We will contact you soon.', 'success');
     event.target.reset();
 }
@@ -546,7 +553,7 @@ document.head.appendChild(style);
 // Setup event listeners
 function setupEventListeners() {
     // Close modal with ESC key
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape') {
             closeModal();
             closeEnrollmentModal();
@@ -594,7 +601,7 @@ function scrollToSection(sectionId) {
 // Search courses (future enhancement)
 function searchCourses(query) {
     const allCourses = [...courses.basic, ...courses.advanced];
-    const results = allCourses.filter(course => 
+    const results = allCourses.filter(course =>
         course.title.toLowerCase().includes(query.toLowerCase()) ||
         course.description.toLowerCase().includes(query.toLowerCase())
     );
@@ -620,7 +627,7 @@ function trackPageVisit(page) {
 }
 
 // Export functions for external use
-window.FlexoLearn = {
+window.Flexoverse = {
     searchCourses,
     getFeaturedCourses,
     trackCourseView,
@@ -631,4 +638,4 @@ window.FlexoLearn = {
     enrollCourse
 };
 
-console.log('FlexoLearn platform loaded successfully!');
+console.log('Flexoverse platform loaded successfully!');

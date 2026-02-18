@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment - FlexoLearn</title>
+    <title>Payment - Flexoverse</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
+
 <body class="auth-page">
+    <div id="canvas-container"></div>
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <h1>📚 FlexoLearn</h1>
+                <h1>🚀 Flexoverse</h1>
                 <p class="tagline">Master Flexography Packaging</p>
             </div>
         </div>
@@ -43,7 +47,7 @@
 
             <div class="payment-methods">
                 <h3>Select Payment Method</h3>
-                
+
                 <div class="payment-option">
                     <input type="radio" id="netbanking" name="payment" value="netbanking" checked>
                     <label for="netbanking" class="payment-label">
@@ -118,22 +122,38 @@
         </div>
     </section>
 
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="qr-modal">
+        <div class="qr-modal-content">
+            <div class="qr-modal-header">
+                <h2>Scan for Course Content</h2>
+                <p>Scan this QR code with Google Lens or Camera to access your course tutorial videos.</p>
+            </div>
+            <div id="qrcodeDisplay" class="qr-display"></div>
+            <p class="qr-note">Scan with Google, not UPI app</p>
+            <button class="btn-home" onclick="redirectToVideos()">View Course Videos</button>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>FlexoLearn</h4>
+                <h4>Flexoverse</h4>
                 <p>Your trusted partner in flexography education</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 FlexoLearn. All rights reserved.</p>
+            <p>&copy; 2026 Flexoverse. All rights reserved.</p>
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="three-bg.js"></script>
+    <script src="click-spark.js"></script>
     <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const user = JSON.parse(localStorage.getItem('flexoUser'));
             if (!user) {
                 window.location.href = 'login.html';
@@ -143,7 +163,7 @@
 
             // Handle payment method selection
             document.querySelectorAll('input[name="payment"]').forEach(radio => {
-                radio.addEventListener('change', function() {
+                radio.addEventListener('change', function () {
                     showPaymentDetails(this.value);
                 });
             });
@@ -188,10 +208,42 @@
             user.paymentStatus = 'completed';
             localStorage.setItem('flexoUser', JSON.stringify(user));
 
-            // Show success and redirect
-            alert('Payment successful! Welcome to FlexoLearn.');
-            window.location.href = 'index.html';
+            if (paymentMethod === 'netbanking') {
+                showQRCode();
+            } else {
+                // Show success and redirect for other methods
+                alert('Payment successful! Welcome to Flexoverse.');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function showQRCode() {
+            const qrModal = document.getElementById('qrModal');
+            const qrContainer = document.getElementById('qrcodeDisplay');
+            qrContainer.innerHTML = ''; // Clear previous QR code
+
+            // Get selected course from localStorage
+            const selectedCourse = JSON.parse(localStorage.getItem('selectedCourse'));
+            const courseParam = selectedCourse ? encodeURIComponent(selectedCourse.title) : 'Flexography';
+
+            // URL for the videos page
+            const videosUrl = window.location.origin + window.location.pathname.replace('payment.html', 'course-videos.html') + `?course=${courseParam}`;
+
+            new QRCode(qrContainer, {
+                text: videosUrl,
+                width: 200,
+                height: 200
+            });
+
+            qrModal.classList.add('active');
+        }
+
+        function redirectToVideos() {
+            const selectedCourse = JSON.parse(localStorage.getItem('selectedCourse'));
+            const courseParam = selectedCourse ? encodeURIComponent(selectedCourse.title) : 'Flexography';
+            window.location.href = `course-videos.html?course=${courseParam}`;
         }
     </script>
 </body>
+
 </html>

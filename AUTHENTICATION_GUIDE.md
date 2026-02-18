@@ -1,8 +1,8 @@
-# FlexoLearn - Complete Authentication & Payment System
+# Flexoverse - Complete Authentication & Payment System
 
 ## 🎯 System Overview
 
-Your FlexoLearn platform now includes a complete authentication, payment, and learning management system!
+Your Flexoverse platform now includes a complete authentication, payment, and learning management system!
 
 ## 📋 Complete User Flow
 

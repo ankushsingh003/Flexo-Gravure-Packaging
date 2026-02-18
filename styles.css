@@ -1011,8 +1011,24 @@ body {
 }
 
 .team-avatar {
-    font-size: 4rem;
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    box-shadow: var(--shadow);
+}
+
+.team-avatar i,
+.team-avatar span {
+    font-size: 4rem;
 }
 
 .team-card h3 {

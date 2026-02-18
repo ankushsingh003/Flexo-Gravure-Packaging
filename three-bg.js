@@ -85,12 +85,14 @@ class FlexoBackground {
                     y: (Math.random() - 0.5) * 0.01,
                     z: (Math.random() - 0.5) * 0.01
                 },
-                floatSpeed: {
+                velocity: {
                     x: (Math.random() - 0.5) * 0.004,
-                    y: (Math.random() - 0.5) * 0.004
+                    y: (Math.random() - 0.5) * 0.004,
+                    z: (Math.random() - 0.5) * 0.002
                 },
                 pulsePhase: Math.random() * Math.PI * 2,
-                pulseSpeed: 0.02 + Math.random() * 0.02
+                pulseSpeed: 0.02 + Math.random() * 0.02,
+                originalPos: mesh.position.clone()
             };
 
             this.scene.add(mesh);
@@ -148,26 +150,47 @@ class FlexoBackground {
         this.mouse.x += (this.targetMouse.x - this.mouse.x) * 0.05;
         this.mouse.y += (this.targetMouse.y - this.mouse.y) * 0.05;
 
-        this.camera.position.x = this.mouse.x * 0.5;
-        this.camera.position.y = -this.mouse.y * 0.5;
-        this.camera.lookAt(0, 0, 0);
+        // Enhanced Camera Parallax
+        this.camera.position.x = this.mouse.x * 2.5;
+        this.camera.position.y = -this.mouse.y * 2.5;
+        this.camera.lookAt(0, 0, 10);
 
-        // Animate products
+        // Animate products with mouse influence
         this.products.forEach(mesh => {
             mesh.rotation.x += mesh.userData.rotationSpeed.x;
             mesh.rotation.y += mesh.userData.rotationSpeed.y;
             mesh.rotation.z += mesh.userData.rotationSpeed.z;
 
-            mesh.position.x += mesh.userData.floatSpeed.x;
-            mesh.position.y += mesh.userData.floatSpeed.y;
+            // Mouse attraction force
+            const dx = (this.mouse.x * 15) - mesh.position.x;
+            const dy = (-this.mouse.y * 15) - mesh.position.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 20) {
+                const force = (20 - dist) * 0.0001;
+                mesh.userData.velocity.x += dx * force;
+                mesh.userData.velocity.y += dy * force;
+            }
+
+            // Apply friction/drag
+            mesh.userData.velocity.x *= 0.98;
+            mesh.userData.velocity.y *= 0.98;
+
+            mesh.position.x += mesh.userData.velocity.x;
+            mesh.position.y += mesh.userData.velocity.y;
 
             // Pulsing effect
             mesh.userData.pulsePhase += mesh.userData.pulseSpeed;
             const pulse = 1 + Math.sin(mesh.userData.pulsePhase) * 0.05;
             mesh.scale.set(pulse, pulse, pulse);
 
-            if (Math.abs(mesh.position.x) > 15) mesh.position.x *= -0.99;
-            if (Math.abs(mesh.position.y) > 15) mesh.position.y *= -0.99;
+            // Boundary wrapping
+            const boundX = 20;
+            const boundY = 15;
+            if (mesh.position.x > boundX) mesh.position.x = -boundX;
+            if (mesh.position.x < -boundX) mesh.position.x = boundX;
+            if (mesh.position.y > boundY) mesh.position.y = -boundY;
+            if (mesh.position.y < -boundY) mesh.position.y = boundY;
         });
 
         // Drift particles

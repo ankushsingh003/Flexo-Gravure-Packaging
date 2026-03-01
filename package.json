@@ -1,0 +1,20 @@
+{
+  "name": "flexoverse-platform",
+  "version": "2.5.0",
+  "description": "The Future of Flexography Learning - 3D E-Learning Platform",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ankushsingh003/FlexoVerse.git"
+  },
+  "keywords": [
+    "flexography",
+    "gravure",
+    "packaging",
+    "3d",
+    "threejs",
+    "e-learning"
+  ],
+  "author": "Ankush Kumar Singh",
+  "license": "ISC"
+}

@@ -1,0 +1,12 @@
+services:
+  - type: static
+    name: flexoverse-platform
+    env: static
+    buildCommand: "" # No build step needed for pure HTML/CSS/JS
+    publishPath: "." # Root directory contains our index.html
+    autoDeploy: true
+    pullRequestPreviewsEnabled: true
+    routes:
+      - type: rewrite
+        source: /.*
+        destination: /index.html

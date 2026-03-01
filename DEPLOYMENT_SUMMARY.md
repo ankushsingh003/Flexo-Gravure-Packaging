@@ -401,9 +401,21 @@ No installation needed! Just open HTML files in a browser.
 Ready for deployment to:
 
 - Web servers
-- Cloud platforms
+- Cloud platforms (Render, Vercel, Netlify)
 - CDN services
 - Static hosting
+
+## 🚀 Deployment to Render (Recommended)
+
+Flexoverse is optimized for **Render Static Sites**. Follow these steps:
+
+1. **GitHub Connection**: Connect your repository `ankushsingh003/FlexoVerse` to Render.
+2. **Auto-Detection**: Render will auto-detect the `render.yaml` blueprint.
+3. **Deployment Settings**:
+   - **Service Type**: Static Site
+   - **Publish Directory**: `.` (Root)
+   - **Build Command**: (Leave Empty)
+4. **Live Link**: Render will provide a custom `onrender.com` URL.
 
 ## 📖 Documentation Included
 

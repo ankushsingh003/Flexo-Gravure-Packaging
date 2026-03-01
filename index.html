@@ -63,20 +63,21 @@
         </div>
         <div class="hero-visual">
             <div class="hero-dashboard">
-                <div class="dashboard-card primary-card">
+                <div class="dashboard-card demo-test-card">
                     <div class="card-header">
-                        <span class="status-dot"></span>
-                        <span>Now Learning: Ink Transfer</span>
+                        <span class="status-dot ml-pulse"></span>
+                        <span>Flexo-ML Assessment</span>
                     </div>
                     <div class="card-body">
-                        <h4>Chapter 4: Speciality Coatings</h4>
-                        <div class="progress-container">
-                            <div class="progress-bar" style="width: 75%"></div>
-                        </div>
-                        <div class="card-meta">
-                            <span><i class="far fa-clock"></i> 12m remaining</span>
-                            <span class="score">98% Match</span>
-                        </div>
+                        <h4>AI-Powered Skills Test</h4>
+                        <p class="card-text">Evaluate your printing expertise using our industrial dataset-trained
+                            model.</p>
+                        <button class="btn-demo-test" onclick="openDemoTest()">
+                            <i class="fas fa-microchip"></i> Take Demo Test
+                        </button>
+                    </div>
+                    <div class="card-footer">
+                        <span class="ml-badge">Dataset v2.4</span>
                     </div>
                 </div>
                 <div class="dashboard-card stats-card">
@@ -89,6 +90,34 @@
                 <div class="dashboard-card floating-badge">
                     <i class="fas fa-award"></i>
                     <span>Industry Recognized</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Progress Section -->
+    <section class="progress-section" id="my-progress">
+        <div class="section-container">
+            <div class="progress-header">
+                <h3>Welcome back, Future Expert!</h3>
+                <p>Track your technical mastery journey</p>
+            </div>
+            <div class="progress-grid">
+                <div class="dashboard-card progress-card-inline">
+                    <div class="card-header">
+                        <span class="status-dot"></span>
+                        <span>Now Learning: Ink Transfer</span>
+                    </div>
+                    <div class="card-body">
+                        <h4>Chapter 4: Speciality Coatings</h4>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 75%"></div>
+                        </div>
+                        <div class="card-meta">
+                            <span><i class="far fa-clock"></i> 12m remaining</span>
+                            <span class="score-badge">98% Mastery Match</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -430,7 +459,31 @@
             if (pm && !e.target.closest('.nav-profile')) pm.classList.remove('show');
         });
     </script>
+    <!-- Demo Test Modal -->
+    <div id="testModal" class="modal">
+        <div class="modal-content test-modal">
+            <span class="close" onclick="closeTestModal()">&times;</span>
+            <div class="test-header">
+                <h2><i class="fas fa-brain"></i> Flexoverse AI Assessment</h2>
+                <div id="test-progress-bar">
+                    <div class="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+            <div id="test-container">
+                <!-- Questions will be injected here -->
+                <div class="loading-ml-test">
+                    <div class="ml-loader"></div>
+                    <p>Initializing ML Inference Engine...</p>
+                </div>
+            </div>
+            <div id="test-results" class="hidden">
+                <!-- Results will be injected here -->
+            </div>
+        </div>
+    </div>
+
     <script src="chatbot.js"></script>
+    <script src="demo-test.js"></script>
 </body>
 
 </html>

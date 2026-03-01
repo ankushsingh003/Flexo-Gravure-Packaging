@@ -40,7 +40,8 @@ mini_project/
 ├── index.html              # Main Landing & Team Portal
 ├── basic-courses.html      # Foundation Curriculum (7 Specialized Courses)
 ├── advanced-courses.html   # Expert Masterclass (4 Advanced Courses)
-├── course-videos.html      # Interactive Video Learning Room
+├── course-videos.html      # Course Overview & Module Syllabus
+├── tutorials.html          # Dedicated Video Learning Environment
 ├── notes/                  # Secure Storage for Course PDF Resources
 ├── assets/                 # Brand Assets & Team Photography
 ├── chatbot.js              # Flexo-Agent AI Logic (RAG)

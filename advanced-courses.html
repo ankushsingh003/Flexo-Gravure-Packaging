@@ -4,84 +4,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Courses - Flexoverse</title>
+    <title>Professional Courses — Flexoverse</title>
+    <meta name="description"
+        content="Advanced flexography and gravure printing courses for experienced industry professionals.">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="music-player.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
     <div id="canvas-container"></div>
-    <!-- Navigation Bar -->
+
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <h1>🚀 Flexoverse</h1>
-                <p class="tagline">Master Flexography Packaging</p>
-            </div>
+            <a href="index.html" class="logo">
+                <h1>⬡ Flexoverse</h1>
+                <span class="tagline">Packaging Print Education</span>
+            </a>
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="basic-courses.html" class="nav-link">Basic Courses</a></li>
-                <li><a href="advanced-courses.html" class="nav-link active">Advanced Courses</a></li>
+                <li><a href="basic-courses.html" class="nav-link">Foundation</a></li>
+                <li><a href="advanced-courses.html" class="nav-link active">Professional</a></li>
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li id="profileNavA" style="display:none;" class="nav-profile">
+                    <button class="profile-btn" onclick="toggleProfileMenu()"><i class="fas fa-user-circle"></i> My
+                        Account</button>
+                    <div class="profile-menu" id="profileMenuA">
+                        <a href="my-purchases.html" class="profile-link"><i class="fas fa-graduation-cap"></i> My
+                            Courses</a>
+                        <a href="#" onclick="handleLogout(event)" class="profile-link logout"><i
+                                class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </li>
+                <li id="loginNavA"><a href="login.html" class="nav-link login-link"><i class="fas fa-lock"></i>
+                        Login</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Page Header -->
     <section class="page-header advanced-header">
-        <div class="header-content">
-            <h1>⭐ Advanced Learning Courses</h1>
-            <p>Expert-level courses for professional excellence and specialization</p>
-            <p class="header-subtitle">Master advanced techniques and industry best practices</p>
+        <div class="section-badge">Professional Track · 4 Courses</div>
+        <h1>Advanced Mastery Courses</h1>
+        <p>Expert-level training for production managers, QC leads, and process engineers</p>
+        <p class="header-subtitle">Prerequisite: Foundation Track or equivalent industry experience</p>
+    </section>
+
+    <section class="statistics">
+        <div class="stat-card"><span class="stat-number">4</span>
+            <div class="stat-label">Expert Courses</div>
+        </div>
+        <div class="stat-card"><span class="stat-number">22+</span>
+            <div class="stat-label">Advanced Modules</div>
+        </div>
+        <div class="stat-card"><span class="stat-number">96%</span>
+            <div class="stat-label">Satisfaction Rate</div>
+        </div>
+        <div class="stat-card"><span class="stat-number">2,500+</span>
+            <div class="stat-label">Professional Learners</div>
         </div>
     </section>
 
-    <!-- Filter Section -->
+    <section class="requirements-section">
+        <div class="section-header">
+            <span class="section-badge">Prerequisites</span>
+            <h2>Who Is This Track For?</h2>
+            <p>Recommended background for best results</p>
+        </div>
+        <div class="requirements-grid">
+            <div class="requirement-card">
+                <div class="req-icon">✓</div>
+                <h3>Foundation Knowledge</h3>
+                <p>Completion of our Foundation Track or equivalent print-industry training</p>
+            </div>
+            <div class="requirement-card">
+                <div class="req-icon">✓</div>
+                <h3>Hands-On Experience</h3>
+                <p>At least 1–2 years working in flexographic or gravure press environments</p>
+            </div>
+            <div class="requirement-card">
+                <div class="req-icon">✓</div>
+                <h3>Technical Aptitude</h3>
+                <p>Working knowledge of printing equipment, inks, and substrate handling</p>
+            </div>
+        </div>
+    </section>
+
     <section class="filter-section">
         <div class="filter-buttons">
             <button class="filter-btn active" onclick="filterCourses('all')">All Courses</button>
             <button class="filter-btn" onclick="filterCourses('efficiency')">Efficiency</button>
-            <button class="filter-btn" onclick="filterCourses('quality')">Quality</button>
+            <button class="filter-btn" onclick="filterCourses('quality')">Quality Control</button>
         </div>
     </section>
 
-    <!-- Courses Grid -->
     <section class="courses-container">
-        <div class="courses-grid" id="advancedCoursesGrid">
-            <!-- Course cards will be generated by JavaScript -->
-        </div>
+        <div class="courses-grid" id="advancedCoursesGrid"></div>
     </section>
 
     <!-- Course Details Modal -->
     <div id="courseModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" onclick="closeModal()">&times;</span>
             <div class="modal-header">
                 <h2 id="modalTitle"></h2>
                 <span class="modal-category" id="modalCategory"></span>
             </div>
             <div class="modal-body">
                 <div class="course-info">
-                    <div class="info-item">
-                        <strong>📊 Level:</strong>
-                        <span id="modalLevel"></span>
-                    </div>
-                    <div class="info-item">
-                        <strong>⏱️ Duration:</strong>
-                        <span id="modalDuration"></span>
-                    </div>
-                    <div class="info-item">
-                        <strong>👥 Learners:</strong>
-                        <span id="modalLearners"></span>
-                    </div>
+                    <div class="info-item"><strong>Level</strong><span id="modalLevel"></span></div>
+                    <div class="info-item"><strong>Duration</strong><span id="modalDuration"></span></div>
+                    <div class="info-item"><strong>Enrolled</strong><span id="modalLearners"></span></div>
                 </div>
                 <div class="course-description">
-                    <h3>Course Description</h3>
+                    <h3>About This Course</h3>
                     <p id="modalDescription"></p>
                 </div>
                 <div class="course-modules">
-                    <h3>Course Modules</h3>
+                    <h3>Modules</h3>
                     <ul id="modalModules"></ul>
                 </div>
                 <div class="course-outcomes">
@@ -90,8 +129,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn-enroll" onclick="enrollCourse()">Enroll Now</button>
                 <button class="btn-close" onclick="closeModal()">Close</button>
+                <button class="btn-enroll" onclick="enrollCourse()">Enroll Now →</button>
             </div>
         </div>
     </div>
@@ -100,125 +139,89 @@
     <div id="enrollmentModal" class="modal">
         <div class="modal-content enrollment-modal">
             <span class="close" onclick="closeEnrollmentModal()">&times;</span>
-            <h2>Welcome to Advanced Learning!</h2>
-            <p>You have successfully enrolled in <strong id="enrolledCourseTitle"></strong></p>
+            <h2>🎉 You're Enrolled!</h2>
+            <p>Successfully enrolled in <strong id="enrolledCourseTitle"></strong></p>
             <div class="enrollment-details">
-                <p>✓ Advanced course materials</p>
-                <p>✓ Interactive expert sessions</p>
-                <p>✓ Professional certification</p>
-                <p>✓ Priority support</p>
+                <p>Full access to advanced course materials</p>
+                <p>Expert video sessions & case studies</p>
+                <p>Professional certification</p>
+                <p>Priority expert support</p>
             </div>
-            <button class="btn-start" onclick="redirectToPayment()">Start Learning</button>
+            <button class="btn-start" onclick="redirectToPayment()">Continue to Payment →</button>
         </div>
     </div>
 
-    <!-- Statistics Section -->
-    <section class="statistics">
-        <div class="stat-card">
-            <div class="stat-number">4</div>
-            <div class="stat-label">Advanced Courses</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">20+</div>
-            <div class="stat-label">Expert Modules</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">96%</div>
-            <div class="stat-label">Satisfaction Rate</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">2500+</div>
-            <div class="stat-label">Advanced Learners</div>
-        </div>
-    </section>
-
-    <!-- Requirements Section -->
-    <section class="requirements-section">
-        <div class="section-header">
-            <h2>📋 Prerequisites</h2>
-            <p>Recommended knowledge for best results</p>
-        </div>
-        <div class="requirements-grid">
-            <div class="requirement-card">
-                <div class="req-icon">✓</div>
-                <h3>Basic Flexography Knowledge</h3>
-                <p>Completion of basic courses or equivalent experience</p>
-            </div>
-            <div class="requirement-card">
-                <div class="req-icon">✓</div>
-                <h3>Hands-on Experience</h3>
-                <p>At least 1-2 years in flexographic printing</p>
-            </div>
-            <div class="requirement-card">
-                <div class="req-icon">✓</div>
-                <h3>Technical Knowledge</h3>
-                <p>Understanding of printing equipment and processes</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
     <section class="testimonials">
         <div class="section-header">
-            <h2>💬 Expert Learner Stories</h2>
+            <span class="section-badge">Expert Stories</span>
+            <h2>From Industry Professionals</h2>
         </div>
         <div class="testimonials-grid">
             <div class="testimonial-card">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p>"These advanced courses transformed my approach to machine efficiency. I've already implemented
-                    several strategies!"</p>
-                <div class="testimonial-author">- Rajesh Kumar (Production Manager)</div>
+                <div class="stars">★★★★★</div>
+                <p>"The machine efficiency module helped us achieve a 28% OEE improvement in under 90 days. This is
+                    exactly what the industry needs."</p>
+                <div class="testimonial-author">— Rajesh Kumar, Production Manager · Uflex Ltd.</div>
             </div>
             <div class="testimonial-card">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p>"The quality control module helped us reduce defects by 40%. Highly recommend!"</p>
-                <div class="testimonial-author">- Priya Sharma (QC Lead)</div>
+                <div class="stars">★★★★★</div>
+                <p>"The QC module is the best treatment of spectrophotometry for flexo that I've encountered. Defect
+                    rates down 40% since we completed it."</p>
+                <div class="testimonial-author">— Priya Sharma, QC Lead · Huhtamaki India</div>
             </div>
             <div class="testimonial-card">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p>"Professional content with real-world applications. This is the best investment in my career!"</p>
-                <div class="testimonial-author">- Vikram Singh (Process Engineer)</div>
+                <div class="stars">★★★★★</div>
+                <p>"Real-world content with data-driven strategies. This is professional development that actually moves
+                    the needle."</p>
+                <div class="testimonial-author">— Vikram Singh, Process Engineer · Cosmo Films</div>
             </div>
         </div>
     </section>
 
-    <!-- Call to Action -->
     <section class="cta-section advanced-cta">
-        <h2>Master Your Skills Today</h2>
-        <p>Enroll in any course and start your journey to professional excellence</p>
+        <h2>Ready to Elevate Your Expertise?</h2>
+        <p>Enroll in any Professional Track course and accelerate your career today</p>
         <div class="cta-buttons">
-            <a href="basic-courses.html" class="cta-button secondary">Back to Basic Courses</a>
+            <a href="basic-courses.html" class="cta-button secondary">← Foundation Track</a>
             <a href="index.html" class="cta-button">Back to Home</a>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-section">
-                <h4>Flexoverse</h4>
-                <p>Your trusted partner in flexography education</p>
+            <div class="footer-brand">
+                <h4>⬡ Flexoverse</h4>
+                <p>The premier online education platform for flexography and gravure printing professionals.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
             </div>
             <div class="footer-section">
-                <h4>Quick Links</h4>
+                <h4>Courses</h4>
+                <ul>
+                    <li><a href="basic-courses.html">Foundation Track</a></li>
+                    <li><a href="advanced-courses.html">Professional Track</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="basic-courses.html">Basic Courses</a></li>
-                    <li><a href="advanced-courses.html">Advanced Courses</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h4>Follow Us</h4>
+                <h4>Legal</h4>
                 <ul>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Flexoverse. All rights reserved.</p>
+            <p>© 2026 Flexoverse. All rights reserved.</p>
         </div>
     </footer>
 
@@ -226,26 +229,29 @@
     <script src="three-bg.js"></script>
     <script src="click-spark.js"></script>
     <script src="script.js"></script>
-    <script src="music-player.js"></script>
+
     <script>
-        // Load advanced courses on page load
         document.addEventListener('DOMContentLoaded', function () {
-            loadAdvancedCoursesPage();
-        });
-
-        function loadAdvancedCoursesPage() {
             const grid = document.getElementById('advancedCoursesGrid');
-            const advancedCourses = courses.advanced;
-
-            advancedCourses.forEach(course => {
-                grid.appendChild(createCourseCard(course));
-            });
+            courses.advanced.forEach(c => grid.appendChild(createCourseCard(c)));
+            const user = JSON.parse(localStorage.getItem('flexoUser'));
+            if (user) {
+                document.getElementById('profileNavA').style.display = 'flex';
+                document.getElementById('loginNavA').style.display = 'none';
+            }
+        });
+        function toggleProfileMenu() { document.getElementById('profileMenuA').classList.toggle('show'); }
+        function handleLogout(e) {
+            e.preventDefault();
+            if (confirm('Logout?')) { localStorage.removeItem('flexoUser'); location.reload(); }
         }
-
-        function redirectToPayment() {
-            window.location.href = 'payment.html';
-        }
+        function redirectToPayment() { window.location.href = 'payment.html'; }
+        document.addEventListener('click', function (e) {
+            const pm = document.getElementById('profileMenuA');
+            if (pm && !e.target.closest('.nav-profile')) pm.classList.remove('show');
+        });
     </script>
+    <script src="chatbot.js"></script>
 </body>
 
 </html>

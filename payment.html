@@ -4,255 +4,436 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment - Flexoverse</title>
+    <title>Payment — Flexoverse</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="music-player.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        .payment-container {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .payment-summary {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-summary h3 {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-top: 0.25rem;
+        }
+
+        .price {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .total-price {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .payment-methods {
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-methods h3 {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .payment-option {
+            margin-bottom: 0.75rem;
+        }
+
+        .payment-option input[type=radio] {
+            display: none;
+        }
+
+        .payment-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-option input:checked+.payment-label {
+            border-color: var(--primary);
+            background: rgba(14, 165, 233, 0.07);
+        }
+
+        .method-icon {
+            font-size: 1.75rem;
+            width: 40px;
+            text-align: center;
+        }
+
+        .method-title {
+            display: block;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .method-desc {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .payment-details {
+            display: none;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-details.active {
+            display: block;
+        }
+
+        .payment-details h4 {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .bank-select,
+        .upi-input {
+            width: 100%;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.8rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .bank-select option {
+            background: #0a1223;
+        }
+
+        .bank-select:focus,
+        .upi-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+        }
+
+        .payment-note {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 0.75rem;
+        }
+
+        .btn-payment {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            padding: 1rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px var(--primary-glow);
+            margin-bottom: 1rem;
+        }
+
+        .btn-payment:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--primary-glow);
+        }
+
+        .payment-security {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .payment-security p {
+            margin-bottom: 0.25rem;
+        }
+
+        .qr-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-modal.active {
+            display: flex;
+        }
+
+        .qr-modal-content {
+            background: rgba(10, 18, 35, 0.97);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .qr-modal-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .qr-modal-header p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .qr-display {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #fff;
+            border-radius: var(--radius);
+            display: inline-block;
+        }
+
+        .qr-note {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-home {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-home:hover {
+            background: var(--primary-dark);
+        }
+
+        .qr-container {
+            text-align: center;
+        }
+
+        .qr-code {
+            font-size: 5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 
 <body class="auth-page">
     <div id="canvas-container"></div>
-    <!-- Navigation Bar -->
+
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <h1>🚀 Flexoverse</h1>
-                <p class="tagline">Master Flexography Packaging</p>
-            </div>
+            <a href="index.html" class="logo">
+                <h1>⬡ Flexoverse</h1>
+                <span class="tagline">Packaging Print Education</span>
+            </a>
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="basic-courses.html" class="nav-link">Basic Courses</a></li>
-                <li><a href="advanced-courses.html" class="nav-link">Advanced Courses</a></li>
-                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li><a href="basic-courses.html" class="nav-link">Foundation</a></li>
+                <li><a href="advanced-courses.html" class="nav-link">Professional</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Payment Container -->
-    <section class="auth-container">
-        <div class="payment-card">
-            <div class="auth-header">
-                <h2>Complete Your Purchase</h2>
-                <p id="userEmail"></p>
+    <section class="auth-container" style="align-items:flex-start; padding-top:3rem;">
+        <div class="payment-container" style="width:100%;">
+            <div class="auth-header" style="text-align:left; margin-bottom:1.5rem;">
+                <div class="auth-logo">⬡ Flexoverse</div>
+                <h2>Complete Your Enrollment</h2>
+                <p id="userEmail" style="color:var(--text-secondary); font-size:0.9rem;"></p>
             </div>
 
             <div class="payment-summary">
                 <h3>Order Summary</h3>
-                <div class="summary-item">
-                    <span>Full Course Access (Lifetime)</span>
-                    <span class="price">₹2,999</span>
+                <div class="summary-item"><span>Full Course Access (Lifetime)</span><span class="price">₹2,999</span>
                 </div>
-                <div class="summary-item">
-                    <span>Expert Support (6 Months)</span>
-                    <span class="price">₹499</span>
-                </div>
-                <div class="summary-total">
-                    <span>Total Amount</span>
-                    <span class="total-price">₹3,498</span>
-                </div>
+                <div class="summary-item"><span>Expert Support (6 Months)</span><span class="price">₹499</span></div>
+                <div class="summary-total"><span>Total Amount</span><span class="total-price">₹3,498</span></div>
             </div>
 
             <div class="payment-methods">
                 <h3>Select Payment Method</h3>
-
                 <div class="payment-option">
                     <input type="radio" id="netbanking" name="payment" value="netbanking" checked>
                     <label for="netbanking" class="payment-label">
                         <div class="method-icon">🏦</div>
-                        <div class="method-info">
-                            <span class="method-title">Net Banking</span>
-                            <span class="method-desc">Direct bank transfer - Fastest & Secure</span>
-                        </div>
+                        <div class="method-info"><span class="method-title">Net Banking</span><span
+                                class="method-desc">Direct bank transfer — Fast &amp; Secure</span></div>
                     </label>
                 </div>
-
                 <div class="payment-option">
                     <input type="radio" id="upi" name="payment" value="upi">
                     <label for="upi" class="payment-label">
                         <div class="method-icon">📱</div>
-                        <div class="method-info">
-                            <span class="method-title">UPI Payment</span>
-                            <span class="method-desc">Google Pay, PhonePe, Paytm - Instant</span>
-                        </div>
+                        <div class="method-info"><span class="method-title">UPI Payment</span><span
+                                class="method-desc">GPay, PhonePe, Paytm — Instant</span></div>
                     </label>
                 </div>
-
                 <div class="payment-option">
                     <input type="radio" id="qrcode" name="payment" value="qrcode">
                     <label for="qrcode" class="payment-label">
                         <div class="method-icon">📲</div>
-                        <div class="method-info">
-                            <span class="method-title">QR Code Scan</span>
-                            <span class="method-desc">Scan with any UPI app - Quick & Easy</span>
-                        </div>
+                        <div class="method-info"><span class="method-title">QR Code Scan</span><span
+                                class="method-desc">Scan with any UPI app — Quick &amp; Easy</span></div>
                     </label>
                 </div>
             </div>
 
-            <!-- Net Banking Details -->
             <div id="netbankingDetails" class="payment-details active">
                 <h4>Select Your Bank</h4>
-                <select class="bank-select" required>
-                    <option value="">Choose a bank...</option>
-                    <option value="sbi">State Bank of India (SBI)</option>
-                    <option value="hdfc">HDFC Bank</option>
-                    <option value="icici">ICICI Bank</option>
-                    <option value="axis">Axis Bank</option>
-                    <option value="punjab">Punjab National Bank</option>
-                    <option value="boi">Bank of India</option>
+                <select class="bank-select">
+                    <option value="">Choose a bank…</option>
+                    <option>State Bank of India (SBI)</option>
+                    <option>HDFC Bank</option>
+                    <option>ICICI Bank</option>
+                    <option>Axis Bank</option>
+                    <option>Punjab National Bank</option>
+                    <option>Bank of India</option>
                 </select>
             </div>
-
-            <!-- UPI Details -->
             <div id="upiDetails" class="payment-details">
                 <h4>UPI ID</h4>
-                <input type="text" placeholder="yourname@upi" class="upi-input" required>
+                <input type="text" class="upi-input" placeholder="yourname@upi">
                 <p class="payment-note">You'll be redirected to your UPI app to complete the payment</p>
             </div>
-
-            <!-- QR Code Details -->
             <div id="qrcodeDetails" class="payment-details">
-                <h4>Scan the QR Code</h4>
+                <h4>Scan QR Code</h4>
                 <div class="qr-container">
                     <div class="qr-code">📦</div>
                     <p>Amount: ₹3,498</p>
                 </div>
-                <p class="payment-note">Scan this QR code with any UPI app to complete payment</p>
+                <p class="payment-note">Scan this QR code with any UPI app</p>
             </div>
 
-            <button class="btn-payment" onclick="processPayment()">Complete Payment</button>
-
+            <button class="btn-payment" onclick="processPayment()"><i class="fas fa-shield-alt"></i> Complete Secure
+                Payment — ₹3,498</button>
             <div class="payment-security">
-                <p>🔒 Your payment is secured with SSL encryption</p>
-                <p>All transactions are protected by 256-bit encryption</p>
+                <p>🔒 256-bit SSL Encrypted · Your data is protected</p>
+                <p>All transactions processed securely via Razorpay</p>
             </div>
         </div>
     </section>
 
-    <!-- QR Code Modal -->
+    <!-- QR Modal -->
     <div id="qrModal" class="qr-modal">
         <div class="qr-modal-content">
             <div class="qr-modal-header">
-                <h2>Scan for Course Content</h2>
-                <p>Scan this QR code with Google Lens or Camera to access your course tutorial videos.</p>
+                <h2>🎓 Access Your Course</h2>
+                <p>Scan the QR code with Google Lens or your camera to access course videos</p>
             </div>
-            <div id="qrcodeDisplay" class="qr-display"></div>
-            <p class="qr-note">Scan with Google, not UPI app</p>
-            <button class="btn-home" onclick="redirectToVideos()">View Course Videos</button>
+            <div style="display:flex;justify-content:center;">
+                <div id="qrcodeDisplay" class="qr-display"></div>
+            </div>
+            <p class="qr-note">Scan with Camera / Google Lens app (not a UPI app)</p>
+            <button class="btn-home" onclick="redirectToVideos()"><i class="fas fa-play"></i> View Course
+                Videos</button>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Flexoverse</h4>
-                <p>Your trusted partner in flexography education</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Flexoverse. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="three-bg.js"></script>
     <script src="click-spark.js"></script>
     <script src="script.js"></script>
-    <script src="music-player.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const user = JSON.parse(localStorage.getItem('flexoUser'));
-            if (!user) {
-                window.location.href = 'login.html';
-            } else {
-                document.getElementById('userEmail').textContent = 'Email: ' + user.email;
-            }
-
-            // Handle payment method selection
-            document.querySelectorAll('input[name="payment"]').forEach(radio => {
-                radio.addEventListener('change', function () {
-                    showPaymentDetails(this.value);
+            if (!user) { window.location.href = 'login.html'; return; }
+            document.getElementById('userEmail').textContent = 'Logged in as: ' + user.email;
+            document.querySelectorAll('input[name="payment"]').forEach(r => {
+                r.addEventListener('change', function () {
+                    document.querySelectorAll('.payment-details').forEach(d => d.classList.remove('active'));
+                    document.getElementById(this.value + 'Details').classList.add('active');
                 });
             });
         });
-
-        function showPaymentDetails(method) {
-            document.querySelectorAll('.payment-details').forEach(detail => {
-                detail.classList.remove('active');
-            });
-
-            if (method === 'netbanking') {
-                document.getElementById('netbankingDetails').classList.add('active');
-            } else if (method === 'upi') {
-                document.getElementById('upiDetails').classList.add('active');
-            } else if (method === 'qrcode') {
-                document.getElementById('qrcodeDetails').classList.add('active');
-            }
-        }
-
         function processPayment() {
-            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            const method = document.querySelector('input[name="payment"]:checked').value;
             const user = JSON.parse(localStorage.getItem('flexoUser'));
-
-            // Validate selection
-            if (paymentMethod === 'netbanking') {
-                const bank = document.querySelector('.bank-select').value;
-                if (!bank) {
-                    alert('Please select a bank');
-                    return;
-                }
-            } else if (paymentMethod === 'upi') {
-                const upiId = document.querySelector('.upi-input').value;
-                if (!upiId) {
-                    alert('Please enter your UPI ID');
-                    return;
-                }
-            }
-
-            // Process payment (simulate)
-            user.paymentMethod = paymentMethod;
-            user.paymentDate = new Date().toLocaleString();
-            user.paymentStatus = 'completed';
+            user.paymentMethod = method; user.paymentDate = new Date().toLocaleString(); user.paymentStatus = 'completed';
             localStorage.setItem('flexoUser', JSON.stringify(user));
-
-            if (paymentMethod === 'netbanking') {
-                showQRCode();
-            } else {
-                // Show success and redirect for other methods
-                alert('Payment successful! Welcome to Flexoverse.');
-                window.location.href = 'index.html';
-            }
+            if (method === 'netbanking') { showQRCode(); }
+            else { showNotification('Payment successful! Welcome to Flexoverse.'); setTimeout(() => window.location.href = 'index.html', 1800); }
         }
-
         function showQRCode() {
-            const qrModal = document.getElementById('qrModal');
             const qrContainer = document.getElementById('qrcodeDisplay');
-            qrContainer.innerHTML = ''; // Clear previous QR code
-
-            // Get selected course from localStorage
+            qrContainer.innerHTML = '';
             const selectedCourse = JSON.parse(localStorage.getItem('selectedCourse'));
             const courseParam = selectedCourse ? encodeURIComponent(selectedCourse.title) : 'Flexography';
-
-            // URL for the videos page
-            const videosUrl = window.location.origin + window.location.pathname.replace('payment.html', 'course-videos.html') + `?course=${courseParam}`;
-
-            new QRCode(qrContainer, {
-                text: videosUrl,
-                width: 200,
-                height: 200
-            });
-
-            qrModal.classList.add('active');
+            const videosUrl = window.location.origin + window.location.pathname.replace('payment.html', 'course-videos.html') + '?course=' + courseParam;
+            new QRCode(qrContainer, { text: videosUrl, width: 200, height: 200 });
+            document.getElementById('qrModal').classList.add('active');
         }
-
         function redirectToVideos() {
             const selectedCourse = JSON.parse(localStorage.getItem('selectedCourse'));
             const courseParam = selectedCourse ? encodeURIComponent(selectedCourse.title) : 'Flexography';
-            window.location.href = `course-videos.html?course=${courseParam}`;
+            window.location.href = 'course-videos.html?course=' + courseParam;
         }
     </script>
+    <script src="chatbot.js"></script>
 </body>
 
 </html>

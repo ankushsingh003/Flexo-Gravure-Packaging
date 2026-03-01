@@ -4,157 +4,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Flexoverse</title>
+    <title>Login — Flexoverse</title>
+    <meta name="description"
+        content="Login to your Flexoverse account and continue your flexography education journey.">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="music-player.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body class="auth-page">
     <div id="canvas-container"></div>
-    <!-- Navigation Bar -->
+
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <h1>🚀 Flexoverse</h1>
-                <p class="tagline">Master Flexography Packaging</p>
-            </div>
+            <a href="index.html" class="logo">
+                <h1>⬡ Flexoverse</h1>
+                <span class="tagline">Packaging Print Education</span>
+            </a>
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="basic-courses.html" class="nav-link">Basic Courses</a></li>
-                <li><a href="advanced-courses.html" class="nav-link">Advanced Courses</a></li>
-                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li><a href="basic-courses.html" class="nav-link">Foundation</a></li>
+                <li><a href="advanced-courses.html" class="nav-link">Professional</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Login Container -->
     <section class="auth-container">
         <div class="auth-card">
             <div class="auth-header">
+                <div class="auth-logo">⬡ Flexoverse</div>
                 <h2>Welcome Back</h2>
-                <p>Login to your Flexoverse account</p>
+                <p>Sign in to continue your learning journey</p>
             </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)" class="auth-form">
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
+                    <label for="email"><i class="fas fa-envelope"></i> Work Email</label>
+                    <input type="email" id="email" placeholder="you@company.com" required>
                 </div>
-
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
                     <input type="password" id="password" placeholder="Enter your password" required>
                 </div>
-
                 <div class="form-group checkbox">
                     <input type="checkbox" id="remember">
-                    <label for="remember">Remember me</label>
+                    <label for="remember">Remember me for 30 days</label>
                 </div>
-
-                <button type="submit" class="btn-login">Login to Flexoverse</button>
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Sign In to Flexoverse
+                </button>
             </form>
 
             <div class="auth-divider">OR</div>
 
-            <div class="auth-alternative">
-                <button class="btn-guest" onclick="handleGuestLogin()">Continue as Guest</button>
-            </div>
+            <button class="btn-guest" onclick="handleGuestLogin()">
+                <i class="fas fa-user"></i> Continue as Guest
+            </button>
 
             <div class="auth-footer">
-                <p>Don't have an account? <a href="#" onclick="handleSignup(event)">Sign Up</a></p>
-                <p><a href="index.html">Back to Home</a></p>
+                <p>Don't have an account? <a href="#" onclick="handleSignup(event)">Create Account</a></p>
+                <p><a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a></p>
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Flexoverse</h4>
-                <p>Your trusted partner in flexography education</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Follow Us</h4>
-                <ul>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">LinkedIn</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Flexoverse. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="three-bg.js"></script>
     <script src="click-spark.js"></script>
     <script src="script.js"></script>
-    <script src="music-player.js"></script>
+
     <script>
         function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
             if (email && password) {
-                // Save user data to localStorage
                 const userData = {
-                    email: email,
-                    name: email.split('@')[0],
+                    email,
+                    name: email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
                     loginTime: new Date().toLocaleString(),
-                    enrolled: []
+                    enrolled: [],
+                    paymentStatus: 'completed'
                 };
                 localStorage.setItem('flexoUser', JSON.stringify(userData));
-
-                // Check if login was from course enrollment
                 const fromCourse = sessionStorage.getItem('loginFromCourse');
-                if (fromCourse) {
-                    sessionStorage.removeItem('loginFromCourse');
-                    window.location.href = 'payment.html';
-                } else {
-                    window.location.href = 'index.html';
-                }
+                if (fromCourse) { sessionStorage.removeItem('loginFromCourse'); window.location.href = 'payment.html'; }
+                else window.location.href = 'index.html';
             }
         }
-
         function handleGuestLogin() {
-            // Create guest user
-            const userData = {
-                email: 'guest@flexoverse.com',
-                name: 'Guest User',
-                loginTime: new Date().toLocaleString(),
-                enrolled: [],
-                isGuest: true
-            };
+            const userData = { email: 'guest@flexoverse.com', name: 'Guest', loginTime: new Date().toLocaleString(), enrolled: [], isGuest: true };
             localStorage.setItem('flexoUser', JSON.stringify(userData));
-
-            // Check if login was from course enrollment
             const fromCourse = sessionStorage.getItem('loginFromCourse');
-            if (fromCourse) {
-                sessionStorage.removeItem('loginFromCourse');
-                window.location.href = 'payment.html';
-            } else {
-                window.location.href = 'index.html';
-            }
+            if (fromCourse) { sessionStorage.removeItem('loginFromCourse'); window.location.href = 'payment.html'; }
+            else window.location.href = 'index.html';
         }
-
         function handleSignup(event) {
             event.preventDefault();
-            alert('Sign up functionality will be available soon!');
+            alert('Account registration coming soon! Contact us to get early access.');
         }
     </script>
+    <script src="chatbot.js"></script>
 </body>
 
 </html>

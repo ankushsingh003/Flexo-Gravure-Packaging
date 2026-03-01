@@ -502,26 +502,13 @@ function handleContactForm(event) {
 // Show notification
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: ${type === 'success' ? '#10b981' : '#ef4444'};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 5px;
-        z-index: 3000;
-        animation: slideInRight 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    `;
+    notification.className = `notification ${type}`;
     notification.textContent = message;
     document.body.appendChild(notification);
-
-    // Auto remove
     setTimeout(() => {
         notification.style.animation = 'slideOutRight 0.3s ease';
         setTimeout(() => notification.remove(), 300);
-    }, 3000);
+    }, 3500);
 }
 
 // Add animation styles

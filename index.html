@@ -4,114 +4,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flexoverse - Interactive 3D E-Learning Platform</title>
+    <title>Flexoverse — Industry-Leading Flexography & Gravure Education</title>
+    <meta name="description"
+        content="Master flexography and gravure printing with Flexoverse — the premier online learning platform trusted by packaging industry professionals worldwide.">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="music-player.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body id="home-page">
     <div id="canvas-container"></div>
-    <!-- Navigation Bar -->
+
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <h1>🚀 Flexoverse</h1>
-                <p class="tagline">Master Flexography Packaging</p>
-            </div>
+            <a href="index.html" class="logo">
+                <h1>⬡ Flexoverse</h1>
+                <span class="tagline">Packaging Print Education</span>
+            </a>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html" class="nav-link active">Home</a></li>
                 <li><a href="basic-courses.html" class="nav-link">Basic Courses</a></li>
                 <li><a href="advanced-courses.html" class="nav-link">Advanced Courses</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li class="nav-profile" id="profileNav" style="display: none;">
-                    <button class="profile-btn" onclick="toggleProfileMenu()">👤 Profile</button>
+                <li class="nav-profile" id="profileNav" style="display:none;">
+                    <button class="profile-btn" onclick="toggleProfileMenu()">
+                        <i class="fas fa-user-circle"></i> My Account
+                    </button>
                     <div class="profile-menu" id="profileMenu">
-                        <a href="my-purchases.html" class="profile-link">📚 My Purchases</a>
-                        <a href="#" onclick="handleLogout(event)" class="profile-link logout">🚪 Logout</a>
+                        <a href="my-purchases.html" class="profile-link"><i class="fas fa-graduation-cap"></i> My
+                            Courses</a>
+                        <a href="#" onclick="handleLogout(event)" class="profile-link logout"><i
+                                class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </li>
                 <li class="nav-login" id="loginNav">
-                    <a href="login.html" class="nav-link login-link">🔐 Login</a>
+                    <a href="login.html" class="nav-link login-link"><i class="fas fa-lock"></i> Login</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h2>Welcome to Flexoverse</h2>
-            <p>Comprehensive Learning Platform for Flexography Packaging Excellence</p>
-            <button class="cta-button" onclick="openExploreModal()">Start Learning</button>
+            <div class="hero-badge"><span class="dot"></span> Trusted by 5,000+ Printing Professionals</div>
+            <h2>Master <span class="highlight">Flexography</span><br>& Gravure Printing</h2>
+            <p>The most comprehensive online education platform for the packaging and printing industry. From prepress
+                fundamentals to advanced quality control — learn from real-world experts.</p>
+            <div class="hero-actions">
+                <button class="cta-button" onclick="openExploreModal()">
+                    <i class="fas fa-play"></i> Start Learning
+                </button>
+                <a href="#basic" class="cta-button secondary">
+                    <i class="fas fa-book-open"></i> View Courses
+                </a>
+            </div>
         </div>
-        <div class="hero-image">
-            <div class="hero-icon">🎓</div>
+        <div class="hero-visual">
+            <div class="hero-dashboard">
+                <div class="dashboard-card primary-card">
+                    <div class="card-header">
+                        <span class="status-dot"></span>
+                        <span>Now Learning: Ink Transfer</span>
+                    </div>
+                    <div class="card-body">
+                        <h4>Chapter 4: Speciality Coatings</h4>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 75%"></div>
+                        </div>
+                        <div class="card-meta">
+                            <span><i class="far fa-clock"></i> 12m remaining</span>
+                            <span class="score">98% Match</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-card stats-card">
+                    <div class="stats-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="stats-info">
+                        <span class="stats-num">5000+</span>
+                        <span class="stats-label">Certified</span>
+                    </div>
+                </div>
+                <div class="dashboard-card floating-badge">
+                    <i class="fas fa-award"></i>
+                    <span>Industry Recognized</span>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Featured Courses Preview Section -->
+    <!-- Stats -->
+    <section class="statistics">
+        <div class="stat-card">
+            <span class="stat-number">11</span>
+            <div class="stat-label">Expert Courses</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">5,000+</span>
+            <div class="stat-label">Active Learners</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">95%</span>
+            <div class="stat-label">Success Rate</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">24/7</span>
+            <div class="stat-label">Support</div>
+        </div>
+    </section>
+
+    <!-- Featured Courses -->
     <section id="basic" class="featured-section">
         <div class="section-header">
-            <h2>📚 Featured Courses</h2>
-            <p>Explore our comprehensive learning paths</p>
+            <span class="section-badge">Learning Paths</span>
+            <h2>Choose Your Expertise Level</h2>
+            <p>Structured learning paths designed by industry practitioners for real-world impact</p>
         </div>
         <div class="featured-preview">
             <div class="featured-card" onclick="redirectTo('basic-courses.html')">
-                <div class="featured-icon">🎯</div>
-                <h3>Basic Learning</h3>
-                <p>7 Foundation Courses</p>
-                <p class="featured-desc">Master the fundamentals of flexography packaging</p>
-                <button class="btn-explore">Explore Courses →</button>
+                <span class="featured-icon">📐</span>
+                <h3>Foundation Track</h3>
+                <p>7 Core Courses</p>
+                <p class="featured-desc">Build a solid understanding of flexographic and gravure printing processes,
+                    inks, materials, equipment, and defect analysis — perfect for newcomers and plant-floor personnel.
+                </p>
+                <button class="btn-explore">Explore Foundation <i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="featured-card" onclick="redirectTo('advanced-courses.html')">
-                <div class="featured-icon">⭐</div>
-                <h3>Advanced Learning</h3>
-                <p>4 Expert Courses</p>
-                <p class="featured-desc">Professional excellence and specialization</p>
-                <button class="btn-explore">Explore Courses →</button>
+                <span class="featured-icon">⚡</span>
+                <h3>Professional Track</h3>
+                <p>4 Advanced Courses</p>
+                <p class="featured-desc">Master machine efficiency, output optimization, spectrophotometric quality
+                    control, and sustainable waste reduction strategies for competitive production environments.</p>
+                <button class="btn-explore">Explore Professional <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
     </section>
 
-    <!-- Explore Learning Path Modal -->
+    <!-- Why Choose Us -->
+    <section class="featured-section" style="padding-top:0;">
+        <div class="section-header">
+            <span class="section-badge">Why Flexoverse</span>
+            <h2>Built for the Industry</h2>
+            <p>We bridge the knowledge gap between academic theory and shop-floor reality</p>
+        </div>
+        <div class="featured-preview">
+            <div class="featured-card">
+                <span class="featured-icon">🎯</span>
+                <h3>Industry-Aligned Curriculum</h3>
+                <p class="featured-desc">Every module is designed around real production scenarios — from substrate
+                    selection to press registration and color-matching under ISO standards.</p>
+            </div>
+            <div class="featured-card">
+                <span class="featured-icon">🏭</span>
+                <h3>Expert Instructors</h3>
+                <p class="featured-desc">Learn from practitioners with decades of hands-on experience in flexographic
+                    and gravure press operations, prepress, and quality assurance.</p>
+            </div>
+            <div class="featured-card">
+                <span class="featured-icon">📜</span>
+                <h3>Recognized Certificates</h3>
+                <p class="featured-desc">Earn verifiable certificates upon course completion that you can share with
+                    employers and clients as proof of your professional expertise.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore Modal -->
     <div id="exploreModal" class="modal">
         <div class="modal-content explore-modal">
             <span class="close" onclick="closeExploreModal()">&times;</span>
             <div class="explore-header">
-                <h2>🚀 Choose Your Learning Path</h2>
-                <p>Select the course level that matches your experience</p>
+                <h2>Choose Your Learning Path</h2>
+                <p>Select the track that best matches your current experience level</p>
             </div>
             <div class="explore-options">
                 <div class="explore-option" onclick="redirectTo('basic-courses.html')">
-                    <div class="explore-icon">📚</div>
-                    <h3>Basic Courses</h3>
+                    <span class="explore-icon">📐</span>
+                    <h3>Foundation Track</h3>
                     <p class="course-count">7 Courses</p>
-                    <p class="explore-description">
-                        Perfect for beginners. Learn the fundamentals of:
-                    </p>
+                    <p class="explore-description">Ideal for beginners and operators. Covers:</p>
                     <ul class="explore-list">
-                        <li>Flexography Packaging</li>
-                        <li>Gravure Packaging</li>
+                        <li>Flexography & Gravure Fundamentals</li>
                         <li>Flexographic Inks & Materials</li>
-                        <li>Machines & Defects</li>
+                        <li>Machines & Defect Analysis</li>
+                        <li>Prepress Workflow</li>
                     </ul>
-                    <button class="btn-path">Start Basic →</button>
+                    <button class="btn-path">Start Foundation →</button>
                 </div>
                 <div class="explore-option advanced" onclick="redirectTo('advanced-courses.html')">
-                    <div class="explore-icon">⭐</div>
-                    <h3>Advanced Courses</h3>
+                    <span class="explore-icon">⚡</span>
+                    <h3>Professional Track</h3>
                     <p class="course-count">4 Courses</p>
-                    <p class="explore-description">
-                        For experienced professionals. Master:
-                    </p>
+                    <p class="explore-description">For experienced professionals. Masters:</p>
                     <ul class="explore-list">
-                        <li>Machine Efficiency</li>
-                        <li>Output Handling</li>
-                        <li>Quality Control</li>
-                        <li>Wastage Management</li>
+                        <li>Machine & OEE Efficiency</li>
+                        <li>Output Handling & Automation</li>
+                        <li>Spectrophotometric QC</li>
+                        <li>Waste & Sustainability Management</li>
                     </ul>
-                    <button class="btn-path">Start Advanced →</button>
+                    <button class="btn-path">Start Professional →</button>
                 </div>
             </div>
         </div>
@@ -120,32 +213,23 @@
     <!-- Course Details Modal -->
     <div id="courseModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" onclick="closeModal()">&times;</span>
             <div class="modal-header">
                 <h2 id="modalTitle"></h2>
                 <span class="modal-category" id="modalCategory"></span>
             </div>
             <div class="modal-body">
                 <div class="course-info">
-                    <div class="info-item">
-                        <strong>📊 Level:</strong>
-                        <span id="modalLevel"></span>
-                    </div>
-                    <div class="info-item">
-                        <strong>⏱️ Duration:</strong>
-                        <span id="modalDuration"></span>
-                    </div>
-                    <div class="info-item">
-                        <strong>👥 Learners:</strong>
-                        <span id="modalLearners"></span>
-                    </div>
+                    <div class="info-item"><strong>Level</strong><span id="modalLevel"></span></div>
+                    <div class="info-item"><strong>Duration</strong><span id="modalDuration"></span></div>
+                    <div class="info-item"><strong>Enrolled</strong><span id="modalLearners"></span></div>
                 </div>
                 <div class="course-description">
-                    <h3>Course Description</h3>
+                    <h3>About This Course</h3>
                     <p id="modalDescription"></p>
                 </div>
                 <div class="course-modules">
-                    <h3>Course Modules</h3>
+                    <h3>Modules</h3>
                     <ul id="modalModules"></ul>
                 </div>
                 <div class="course-outcomes">
@@ -154,198 +238,185 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn-enroll" onclick="enrollCourse()">Enroll Now</button>
                 <button class="btn-close" onclick="closeModal()">Close</button>
+                <button class="btn-enroll" onclick="enrollCourse()">Enroll Now →</button>
             </div>
         </div>
     </div>
 
-    <!-- Statistics Section -->
-    <section class="statistics">
-        <div class="stat-card">
-            <div class="stat-number">14</div>
-            <div class="stat-label">Total Courses</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">5000+</div>
-            <div class="stat-label">Active Learners</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">95%</div>
-            <div class="stat-label">Success Rate</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">24/7</div>
-            <div class="stat-label">Support Available</div>
-        </div>
-    </section>
-
-    <!-- Team Members Section -->
+    <!-- Team -->
     <section class="team-section">
         <div class="section-header">
-            <h2>👥 Meet Our Team</h2>
-            <p>The talented contributors behind Flexoverse</p>
+            <span class="section-badge">Our Team</span>
+            <h2>The Minds Behind Flexoverse</h2>
+            <p>Passionate contributors building the future of print education</p>
         </div>
         <div class="team-grid">
             <div class="team-card">
-                <div class="team-avatar">
-                    <img src="IMG_20251221_111003205.jpg" alt="Ankush Kumar Singh">
-                </div>
+                <div class="team-avatar"><img src="IMG_20251221_111003205.jpg" alt="Ankush Kumar Singh"></div>
                 <h3>Ankush Kumar Singh</h3>
-                <p class="team-role">JavaScript Contributor</p>
+                <p class="team-role">Lead Developer</p>
                 <div class="team-social">
-                    <a href="https://github.com/ankushsingh003" target="_blank" title="GitHub"><i
-                            class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/ankush-kumar-singh" target="_blank" title="LinkedIn"><i
+                    <a href="https://github.com/ankushsingh003" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/ankush-kumar-singh" target="_blank"><i
                             class="fab fa-linkedin"></i></a>
                 </div>
             </div>
             <div class="team-card">
-                <div class="team-avatar">
-                    <img src="cc2e5737-9c2a-4b09-a6a8-20ed1f0cb706.jpg" alt="Atrijit Sarkar">
-                </div>
+                <div class="team-avatar"><img src="cc2e5737-9c2a-4b09-a6a8-20ed1f0cb706.jpg" alt="Atrijit Sarkar"></div>
                 <h3>Atrijit Sarkar</h3>
-                <p class="team-role">CSS Contributor</p>
+                <p class="team-role">UI Designer</p>
                 <div class="team-social">
-                    <a href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
             <div class="team-card">
-                <div class="team-avatar">
-                    <img src="PXL_20260208_150628314~2.jpg" alt="SK Jasimuddin">
-                </div>
+                <div class="team-avatar"><img src="PXL_20260208_150628314~2.jpg" alt="SK Jasimuddin"></div>
                 <h3>SK Jasimuddin</h3>
-                <p class="team-role">HTML Contributor</p>
+                <p class="team-role">Content Architect</p>
                 <div class="team-social">
-                    <a href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Testimonials -->
     <section class="testimonials">
         <div class="section-header">
-            <h2>💬 What Our Learners Say</h2>
+            <span class="section-badge">Testimonials</span>
+            <h2>Trusted by Professionals</h2>
         </div>
         <div class="testimonials-grid">
             <div class="testimonial-card">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p>"Flexoverse has transformed my understanding of flexography packaging. Highly recommended!"</p>
-                <div class="testimonial-author">- Rajesh Kumar</div>
+                <div class="stars">★★★★★</div>
+                <p>"Flexoverse fundamentally transformed how our team approaches prepress and press-room
+                    troubleshooting. Highly recommended for any packaging professional."</p>
+                <div class="testimonial-author">— Rajesh Kumar, Production Manager · Uflex Ltd.</div>
             </div>
             <div class="testimonial-card">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p>"The advanced courses helped me improve our production efficiency by 30%."</p>
-                <div class="testimonial-author">- Priya Sharma</div>
+                <div class="stars">★★★★★</div>
+                <p>"The advanced quality control module helped us reduce print defects by 40% within three months.
+                    Outstanding return on a very modest investment."</p>
+                <div class="testimonial-author">— Priya Sharma, QC Lead · Huhtamaki India</div>
             </div>
             <div class="testimonial-card">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p>"Excellent content, well-structured modules, and great support team!"</p>
-                <div class="testimonial-author">- Vikram Singh</div>
+                <div class="stars">★★★★★</div>
+                <p>"World-class content with genuine industrial depth. The gravure cylinder preparation module alone is
+                    worth every rupee."</p>
+                <div class="testimonial-author">— Vikram Singh, Process Engineer · Cosmo Films</div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact -->
     <section id="contact" class="contact">
         <div class="section-header">
-            <h2>📞 Get in Touch</h2>
-            <p>Have questions? We're here to help!</p>
+            <span class="section-badge">Contact Us</span>
+            <h2>Get in Touch</h2>
+            <p>Questions about our courses or corporate training? We'd love to hear from you.</p>
         </div>
         <div class="contact-form">
             <form onsubmit="handleContactForm(event)">
                 <div class="form-group">
-                    <input type="text" id="name" placeholder="Your Name" required>
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="e.g. Rajesh Kumar" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" id="email" placeholder="Your Email" required>
+                    <label for="email">Work Email</label>
+                    <input type="email" id="email" placeholder="you@company.com" required>
                 </div>
                 <div class="form-group">
-                    <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Tell us how we can help..." rows="5" required></textarea>
                 </div>
-                <button type="submit" class="btn-submit">Send Message</button>
+                <button type="submit" class="btn-submit">Send Message <i class="fas fa-paper-plane"></i></button>
             </form>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Flexoverse</h4>
-                <p>Your trusted partner in flexography education</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#basic">Courses</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Follow Us</h4>
-                <ul>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">LinkedIn</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Flexoverse. All rights reserved.</p>
-        </div>
-    </footer>
 
     <!-- Enrollment Modal -->
     <div id="enrollmentModal" class="modal">
         <div class="modal-content enrollment-modal">
             <span class="close" onclick="closeEnrollmentModal()">&times;</span>
-            <h2>Welcome to the Course!</h2>
-            <p>You have successfully enrolled in <strong id="enrolledCourseTitle"></strong></p>
+            <h2>🎉 You're Enrolled!</h2>
+            <p>Successfully enrolled in <strong id="enrolledCourseTitle"></strong></p>
             <div class="enrollment-details">
-                <p>✓ Access to all course materials</p>
-                <p>✓ Interactive learning modules</p>
-                <p>✓ Certificate upon completion</p>
-                <p>✓ 24/7 Support</p>
+                <p>Full access to all course materials</p>
+                <p>Interactive video lessons & quizzes</p>
+                <p>Industry-recognized certificate</p>
+                <p>24/7 expert support</p>
             </div>
-            <button class="btn-start" onclick="redirectToPayment()">Start Learning</button>
+            <button class="btn-start" onclick="redirectToPayment()">Continue to Payment →</button>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h4>⬡ Flexoverse</h4>
+                <p>The premier online education platform for flexography and gravure printing professionals. Bridging
+                    theory and industrial practice since 2024.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Courses</h4>
+                <ul>
+                    <li><a href="basic-courses.html">Foundation Track</a></li>
+                    <li><a href="advanced-courses.html">Professional Track</a></li>
+                    <li><a href="#">Corporate Training</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Flexoverse. All rights reserved.</p>
+            <p>Empowering the packaging &amp; printing industry.</p>
+        </div>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="three-bg.js"></script>
     <script src="click-spark.js"></script>
     <script src="script.js"></script>
-    <script src="music-player.js"></script>
+
     <script>
-        // Check if user is logged in on page load
         document.addEventListener('DOMContentLoaded', function () {
             const user = JSON.parse(localStorage.getItem('flexoUser'));
-            if (user && user.paymentStatus === 'completed') {
-                // User is logged in - show profile button
+            if (user) {
                 document.getElementById('profileNav').style.display = 'flex';
                 document.getElementById('loginNav').style.display = 'none';
             } else {
-                // User not logged in - show login button
                 document.getElementById('profileNav').style.display = 'none';
                 document.getElementById('loginNav').style.display = 'flex';
             }
         });
-
-        function redirectToLogin() {
-            window.location.href = 'login.html';
-        }
-
         function toggleProfileMenu() {
-            const menu = document.getElementById('profileMenu');
-            menu.classList.toggle('show');
+            document.getElementById('profileMenu').classList.toggle('show');
         }
-
         function handleLogout(event) {
             event.preventDefault();
             if (confirm('Are you sure you want to logout?')) {
@@ -353,20 +424,13 @@
                 location.reload();
             }
         }
-
-        function redirectToPayment() {
-            window.location.href = 'payment.html';
-        }
-
-        // Close profile menu when clicking outside
-        document.addEventListener('click', function (event) {
-            const profileMenu = document.getElementById('profileMenu');
-            const profileBtn = document.querySelector('.profile-btn');
-            if (profileBtn && !event.target.closest('.nav-profile')) {
-                profileMenu.classList.remove('show');
-            }
+        function redirectToPayment() { window.location.href = 'payment.html'; }
+        document.addEventListener('click', function (e) {
+            const pm = document.getElementById('profileMenu');
+            if (pm && !e.target.closest('.nav-profile')) pm.classList.remove('show');
         });
     </script>
+    <script src="chatbot.js"></script>
 </body>
 
 </html>

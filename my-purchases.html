@@ -4,8 +4,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Purchases - Flexoverse</title>
+    <title>My Courses — Flexoverse</title>
+    <meta name="description" content="Access and continue your enrolled Flexoverse courses.">
     <link rel="stylesheet" href="styles.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.55rem 1.25rem;
+            border-radius: 99px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active,
+        .tab-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.875rem;
+        }
+
+        .enrolled-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .enrolled-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .enrolled-card:hover {
+            border-color: var(--border-active);
+            transform: translateY(-4px);
+        }
+
+        .enrolled-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .enrolled-card h3 {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .enrolled-card>p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .enrolled-progress {
+            margin-bottom: 0.75rem;
+        }
+
+        .progress-bar-small {
+            height: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 99px;
+            margin-bottom: 0.4rem;
+            overflow: hidden;
+        }
+
+        .progress-fill-small {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #60c8f8);
+            border-radius: 99px;
+            transition: width 0.5s ease;
+        }
+
+        .enrolled-progress p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .enrolled-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .purchases-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .purchases-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .purchases-header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Learning Modal extra styles */
+        .learning-modal {
+            max-width: 900px;
+            width: 95%;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 99px;
+            margin: 0.75rem 0 0.35rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #60c8f8);
+            border-radius: 99px;
+            transition: width 0.4s ease;
+        }
+
+        .learning-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .learning-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .learning-content {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modules-sidebar {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+        }
+
+        .modules-sidebar h3 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        #modulesList {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        #modulesList li {
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        #modulesList li:hover {
+            background: var(--bg-glass-strong);
+            color: var(--text-primary);
+        }
+
+        #modulesList li.active {
+            background: rgba(14, 165, 233, 0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .module-content {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .module-header h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .module-header p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-body p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .module-body h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .module-body ul {
+            list-style: none;
+        }
+
+        .module-body li {
+            padding: 0.4rem 0 0.4rem 1.25rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            position: relative;
+        }
+
+        .module-body li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .learning-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            justify-content: flex-end;
+        }
+
+        .btn-module-prev,
+        .btn-module-next {
+            padding: 0.55rem 1.25rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .btn-module-prev {
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+        }
+
+        .btn-module-next {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .btn-module-next:hover {
+            background: var(--primary-dark);
+        }
+
+        .learning-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+
+        #completionStatus {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .btn-close-learning {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.55rem 1.25rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-close-learning:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+    </style>
 </head>
 
 <body>
@@ -14,19 +342,22 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <h1>🚀 Flexoverse</h1>
-                <p class="tagline">Master Flexography Packaging</p>
+                <h1>⬡ Flexoverse</h1>
+                <p class="tagline">Packaging Print Education</p>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="basic-courses.html" class="nav-link">Basic Courses</a></li>
-                <li><a href="advanced-courses.html" class="nav-link">Advanced Courses</a></li>
+                <li><a href="basic-courses.html" class="nav-link">Foundation</a></li>
+                <li><a href="advanced-courses.html" class="nav-link">Professional</a></li>
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
                 <li class="nav-profile">
-                    <button class="profile-btn" onclick="toggleProfileMenu()">👤 Profile</button>
+                    <button class="profile-btn" onclick="toggleProfileMenu()"><i class="fas fa-user-circle"></i> My
+                        Account</button>
                     <div class="profile-menu" id="profileMenu">
-                        <a href="my-purchases.html" class="profile-link active">📚 My Purchases</a>
-                        <a href="#" onclick="handleLogout(event)" class="profile-link logout">🚪 Logout</a>
+                        <a href="my-purchases.html" class="profile-link"><i class="fas fa-graduation-cap"></i> My
+                            Courses</a>
+                        <a href="#" onclick="handleLogout(event)" class="profile-link logout"><i
+                                class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </li>
             </ul>
@@ -35,46 +366,39 @@
 
     <!-- Page Header -->
     <section class="page-header">
-        <div class="header-content">
-            <h1>📚 My Purchases</h1>
-            <p>Your enrolled courses and learning progress</p>
-        </div>
+        <div class="section-badge">Student Dashboard</div>
+        <h1>My Enrolled Courses</h1>
+        <p>Access all your courses and track your learning progress</p>
     </section>
 
     <!-- Courses Container -->
     <section class="courses-container">
         <div class="purchases-header">
             <h2 id="userGreeting"></h2>
-            <p>Total Purchased Access: <strong>All 11 Courses</strong></p>
+            <p>Full lifetime access to <strong>all 11 courses</strong></p>
         </div>
 
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('all')">All Courses</button>
-            <button class="tab-btn" onclick="switchTab('basic')">Basic (7)</button>
-            <button class="tab-btn" onclick="switchTab('advanced')">Advanced (4)</button>
+            <button class="tab-btn active" onclick="switchTab('all')">All Courses (11)</button>
+            <button class="tab-btn" onclick="switchTab('basic')">Foundation (7)</button>
+            <button class="tab-btn" onclick="switchTab('advanced')">Professional (4)</button>
         </div>
 
         <!-- Basic Courses Tab -->
-        <div id="basicTab" class="tab-content active">
-            <h3>Basic Learning Courses</h3>
-            <div class="enrolled-grid" id="basicEnrolledGrid">
-                <!-- Will be populated by JavaScript -->
-            </div>
+        <div id="basicTab" class="tab-content">
+            <h3>Foundation Track Courses</h3>
+            <div class="enrolled-grid" id="basicEnrolledGrid"></div>
         </div>
 
         <!-- Advanced Courses Tab -->
         <div id="advancedTab" class="tab-content">
-            <h3>Advanced Learning Courses</h3>
-            <div class="enrolled-grid" id="advancedEnrolledGrid">
-                <!-- Will be populated by JavaScript -->
-            </div>
+            <h3>Professional Track Courses</h3>
+            <div class="enrolled-grid" id="advancedEnrolledGrid"></div </div>
         </div>
 
         <!-- All Courses Tab -->
-        <div id="allTab" class="tab-content">
-            <div id="allEnrolledGrid" class="enrolled-grid">
-                <!-- Will be populated by JavaScript -->
-            </div>
+        <div id="allTab" class="tab-content active">
+            <div id="allEnrolledGrid" class="enrolled-grid"></div>
         </div>
     </section>
 
@@ -116,20 +440,16 @@
 
     <!-- Statistics Section -->
     <section class="statistics">
-        <div class="stat-card">
-            <div class="stat-number" id="totalCourses">11</div>
+        <div class="stat-card"><span class="stat-number" id="totalCourses">11</span>
             <div class="stat-label">Total Courses</div>
         </div>
-        <div class="stat-card">
-            <div class="stat-number" id="coursesProgress">0%</div>
+        <div class="stat-card"><span class="stat-number" id="coursesProgress">0%</span>
             <div class="stat-label">Overall Progress</div>
         </div>
-        <div class="stat-card">
-            <div class="stat-number" id="hoursSpent">0</div>
+        <div class="stat-card"><span class="stat-number" id="hoursSpent">0</span>
             <div class="stat-label">Hours Spent</div>
         </div>
-        <div class="stat-card">
-            <div class="stat-number" id="certificatesEarned">0</div>
+        <div class="stat-card"><span class="stat-number" id="certificatesEarned">0</span>
             <div class="stat-label">Certificates</div>
         </div>
     </section>
@@ -137,21 +457,34 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-section">
-                <h4>Flexoverse</h4>
-                <p>Your trusted partner in flexography education</p>
+            <div class="footer-brand">
+                <h4>⬡ Flexoverse</h4>
+                <p>The premier online education platform for flexography and gravure printing professionals.</p>
             </div>
             <div class="footer-section">
-                <h4>Quick Links</h4>
+                <h4>Courses</h4>
+                <ul>
+                    <li><a href="basic-courses.html">Foundation Track</a></li>
+                    <li><a href="advanced-courses.html">Professional Track</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="basic-courses.html">Basic Courses</a></li>
-                    <li><a href="advanced-courses.html">Advanced Courses</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Flexoverse. All rights reserved.</p>
+            <p>© 2026 Flexoverse. All rights reserved.</p>
         </div>
     </footer>
 
@@ -159,7 +492,8 @@
     <script src="three-bg.js"></script>
     <script src="click-spark.js"></script>
     <script src="script.js"></script>
-    <script src="music-player.js"></script>
+
+
     <script>
         let currentCourse = null;
         let currentModuleIndex = 0;
@@ -351,6 +685,7 @@
             }
         });
     </script>
+    <script src="chatbot.js"></script>
 </body>
 
 </html>

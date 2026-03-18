@@ -78,7 +78,7 @@ const courses = {
             id: 4,
             title: "Flexographic Materials",
             category: "material",
-            icon: "🏭",
+            icon: "assets/materials.png",
             description: "Explore various materials used in flexographic printing and their characteristics.",
             level: "Beginner",
             duration: "3 weeks",

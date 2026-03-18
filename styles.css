@@ -2124,13 +2124,17 @@ body::before {
 }
 
 /* Track Logo Styles (Reverted to Header Format) */
-.featured-card {
-    position: relative;
-    overflow: hidden;
+.featured-card.track-card {
     min-height: 480px;
     display: flex;
     flex-direction: column;
-    padding: 0; /* Match course-card has-image */
+    padding: 0;
+}
+
+.featured-card {
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
 }
 
 .track-card-padding {

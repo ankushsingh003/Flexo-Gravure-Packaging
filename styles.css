@@ -2123,36 +2123,83 @@ body::before {
     font-style: italic; /* Centered content style from earlier */
 }
 
-/* Track Logo Styles */
-.track-logo-container {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 1.5rem;
+/* Track Logo Styles (Full Card Background) */
+.featured-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
 }
 
-.track-logo {
+.card-bg-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140%;
+    height: 140%;
+    z-index: 1;
+    opacity: 0.08; /* Very subtle background watermark */
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+.featured-card:hover .card-bg-logo {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.12;
+}
+
+.card-bg-logo img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
-.modal-track-logo {
-    width: 60px;
-    height: 60px;
+.card-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.track-info {
+    font-weight: 700;
+    color: var(--primary);
     margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
-.modal-track-logo img {
+/* Modal Track Logo Background */
+.explore-option {
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-bg-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    z-index: 1;
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.modal-bg-logo img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+.modal-card-content {
+    position: relative;
+    z-index: 2;
 }
 
 .plan-options {

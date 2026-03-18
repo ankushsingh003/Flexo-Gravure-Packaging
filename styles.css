@@ -2164,6 +2164,19 @@ body::before {
     transform: scale(1.1);
 }
 
+/* Specific Fix for Track Logos Visibility */
+.featured-card .course-image-header,
+.explore-option .course-image-header {
+    background: rgba(255, 255, 255, 0.02); /* Slight background for contrast */
+    height: 200px; /* Slightly taller to accommodate full logo */
+}
+
+.featured-card .course-image-header img,
+.explore-option .course-image-header img {
+    object-fit: contain; /* Prevent cropping of text like 'FOUNDATION' */
+    padding: 1.5rem; /* Give it breathng room */
+}
+
 .plan-options {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

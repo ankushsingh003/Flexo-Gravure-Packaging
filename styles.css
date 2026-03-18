@@ -851,7 +851,17 @@ body::before {
 .course-icon {
     padding: 1.5rem 1.5rem 0;
     font-size: 2.5rem;
-    display: block;
+    display: flex;
+    align-items: center;
+}
+
+.course-card-image {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .course-header {
@@ -1995,7 +2005,7 @@ body::before {
 
 .payment-header {
     margin-bottom: 2rem;
-    center: text;
+    text-align: center;
 }
 
 .payment-header h2 {

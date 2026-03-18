@@ -195,7 +195,7 @@ const courses = {
             id: 9,
             title: "Handling Output",
             category: "efficiency",
-            icon: "📦",
+            icon: "assets/handling.png",
             description: "Advanced techniques for handling, packaging, and distribution of printed materials.",
             level: "Advanced",
             duration: "4 weeks",
@@ -218,7 +218,7 @@ const courses = {
             id: 10,
             title: "Print Quality Control",
             category: "quality",
-            icon: "✅",
+            icon: "assets/quality.png",
             description: "Advanced quality control methods and techniques for flexographic printing.",
             level: "Advanced",
             duration: "7 weeks",
@@ -241,7 +241,7 @@ const courses = {
             id: 11,
             title: "Flexographic Wastage Control",
             category: "efficiency",
-            icon: "♻️",
+            icon: "assets/wastage.png",
             description: "Minimize waste in flexographic production through smart management and practices.",
             level: "Advanced",
             duration: "5 weeks",
@@ -296,8 +296,12 @@ function createCourseCard(course) {
 
     const ratingStars = '⭐'.repeat(5);
 
+    const iconHtml = course.icon.includes('/') 
+        ? `<img src="${course.icon}" alt="${course.title}" class="course-card-image">`
+        : course.icon;
+
     card.innerHTML = `
-        <div class="course-icon">${course.icon}</div>
+        <div class="course-icon">${iconHtml}</div>
         <div class="course-header">
             <h3 class="course-title">${course.title}</h3>
             <span class="course-category">${getCategoryLabel(course.category)}</span>

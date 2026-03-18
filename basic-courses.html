@@ -64,6 +64,39 @@
         </div>
     </section>
 
+    <!-- FAQ Accordion Section -->
+    <section class="faq-section">
+        <div class="section-header">
+            <span class="section-badge">Common Questions</span>
+            <h2>Understanding the Processes</h2>
+        </div>
+        <div class="faq-accordion">
+            <div class="faq-item active">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What is Flexography?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Flexography is a high-speed relief printing process that uses flexible photopolymer plates and
+                        fast-drying inks. It is widely used for printing on packaging materials like plastic films,
+                        foil, paper bags, and corrugated board — making it the backbone of modern product packaging.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What is Gravure printing?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Gravure printing is a long-run, high-quality printing process that uses engraved metallic
+                        cylinders. It is known for its ability to produce fine detail and consistent color, making it
+                        ideal for high-volume packaging, magazines, and wallpapers where premium visual impact is
+                        essential.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="filter-section">
         <div class="filter-buttons">
             <button class="filter-btn active" onclick="filterCourses('all')">All Courses</button>
@@ -228,6 +261,17 @@
             const pm = document.getElementById('profileMenuB');
             if (pm && !e.target.closest('.nav-profile')) pm.classList.remove('show');
         });
+
+        function toggleFAQ(element) {
+            const item = element.parentElement;
+            item.classList.toggle('active');
+            
+            // Optional: Close other open items
+            const allItems = document.querySelectorAll('.faq-item');
+            allItems.forEach(i => {
+                if (i !== item) i.classList.remove('active');
+            });
+        }
     </script>
     <script src="chatbot.js"></script>
 </body>

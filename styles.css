@@ -2169,9 +2169,18 @@ body::before {
 }
 
 /* Specific Fix for Track Logos Visibility & Coverage */
+.featured-card.track-card[onclick*="basic"] .course-image-header,
+.explore-option[onclick*="basic"] .course-image-header {
+    background: #e2e2e2; /* Match Foundation logo grey background */
+}
+
+.featured-card.track-card[onclick*="advanced"] .course-image-header,
+.explore-option[onclick*="advanced"] .course-image-header {
+    background: #fff; /* Professional logo background */
+}
+
 .featured-card.track-card .course-image-header,
 .explore-option .course-image-header {
-    background: #fff; /* Match logo background for seamless full-width coverage */
     height: 180px;
     display: flex;
     align-items: center;

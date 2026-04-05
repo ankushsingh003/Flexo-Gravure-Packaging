@@ -13,6 +13,10 @@
 </head>
 
 <body id="home-page">
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
     <div id="canvas-container"></div>
 
     <!-- Navigation -->
@@ -311,7 +315,7 @@
                 <p class="team-role">Lead Developer</p>
                 <div class="team-social">
                     <a href="https://github.com/ankushsingh003" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/ankush-kumar-singh" target="_blank"><i
+                    <a href="https://www.linkedin.com/in/ankush-kumar-singh-40323b2a5" target="_blank"><i
                             class="fab fa-linkedin"></i></a>
                 </div>
             </div>
@@ -508,6 +512,44 @@
 
     <script src="chatbot.js"></script>
     <script src="demo-test.js"></script>
+
+    <!-- Custom Cursor Logic -->
+    <script>
+        (function () {
+            const dot = document.getElementById('cursorDot');
+            const ring = document.getElementById('cursorRing');
+            let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+            let ringX = mouseX, ringY = mouseY;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                dot.style.left = mouseX + 'px';
+                dot.style.top  = mouseY + 'px';
+            });
+
+            // Smooth ring lag via rAF
+            function animateRing() {
+                ringX += (mouseX - ringX) * 0.12;
+                ringY += (mouseY - ringY) * 0.12;
+                ring.style.left = ringX + 'px';
+                ring.style.top  = ringY + 'px';
+                requestAnimationFrame(animateRing);
+            }
+            animateRing();
+
+            // Hover effect on interactive elements
+            const interactives = 'a, button, input, textarea, select, label, [role="button"], .featured-card, .stat-card, .filter-btn, .nav-link';
+            document.querySelectorAll(interactives).forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+
+            // Click shrink
+            document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
+            document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
+        })();
+    </script>
 </body>
 
 </html>

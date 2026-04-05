@@ -37,10 +37,72 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    cursor: none !important;
 }
 
 html {
     scroll-behavior: smooth;
+}
+
+/* ===================== CUSTOM CURSOR ===================== */
+.cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.15s ease, height 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+    box-shadow: 0 0 8px var(--primary), 0 0 20px var(--primary-glow);
+}
+
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(14, 165, 233, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                height 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                border-color 0.25s ease,
+                opacity 0.25s ease;
+    backdrop-filter: none;
+}
+
+/* Hover states — cursor grows on interactive elements */
+body.cursor-hover .cursor-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent), 0 0 32px rgba(245, 158, 11, 0.4);
+}
+
+body.cursor-hover .cursor-ring {
+    width: 52px;
+    height: 52px;
+    border-color: rgba(245, 158, 11, 0.7);
+}
+
+/* Clicking state */
+body.cursor-click .cursor-dot {
+    width: 6px;
+    height: 6px;
+    opacity: 0.8;
+}
+
+body.cursor-click .cursor-ring {
+    width: 28px;
+    height: 28px;
+    border-color: rgba(14, 165, 233, 1);
 }
 
 body {
